@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Move">
+   <children>
+      <Pane layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0">
+         <children>
+            <Circle fill="DODGERBLUE" layoutX="325.0" layoutY="88.0" onMouseClicked="#clickedOn11" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="DODGERBLUE" layoutX="659.0" layoutY="88.0" onMouseClicked="#clickedOn9" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="DODGERBLUE" layoutX="489.0" layoutY="88.0" onMouseClicked="#clickedOn10" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="DODGERBLUE" layoutX="830.0" layoutY="88.0" onMouseClicked="#clickedOn8" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="DODGERBLUE" layoutX="980.0" layoutY="134.0" onMouseClicked="#clickedOn7" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="DODGERBLUE" layoutX="181.0" layoutY="134.0" onMouseClicked="#clickedOn12" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
+            <Ellipse fill="DODGERBLUE" layoutX="1066.0" layoutY="400.0" onMouseClicked="#clickedOn6" radiusX="86.0" radiusY="205.0" stroke="BLACK" strokeType="INSIDE" />
+            <Ellipse fill="DODGERBLUE" layoutX="127.0" layoutY="417.0" onMouseClicked="#clickedOn13" radiusX="86.0" radiusY="205.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="DODGERBLUE" layoutX="203.0" layoutY="688.0" onMouseClicked="#clickedOn0" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="DODGERBLUE" layoutX="348.0" layoutY="726.0" onMouseClicked="#clickedOn1" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="DODGERBLUE" layoutX="502.0" layoutY="726.0" onMouseClicked="#clickedOn2" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="DODGERBLUE" layoutX="659.0" layoutY="726.0" onMouseClicked="#clickedOn3" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="DODGERBLUE" layoutX="814.0" layoutY="726.0" onMouseClicked="#clickedOn4" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="DODGERBLUE" layoutX="980.0" layoutY="660.0" onMouseClicked="#clickedOn5" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
+            <Label layoutX="199.0" layoutY="204.0" text="Hole 13 " />
+            <Label layoutX="311.0" layoutY="168.0" text="Hole 12" />
+            <Label layoutX="475.0" layoutY="168.0" text="Hole 11" />
+            <Label layoutX="645.0" layoutY="168.0" text="Hole 10" />
+            <Label layoutX="816.0" layoutY="168.0" text="Hole 9" />
+            <Label layoutX="900.0" layoutY="196.0" text="Hole 8" />
+            <Label layoutX="237.0" layoutY="409.0" prefHeight="87.0" prefWidth="67.0" text="Hole 14: Player 2 MANCALA" textAlignment="CENTER" wrapText="true" />
+            <Label layoutX="882.0" layoutY="409.0" prefHeight="80.0" prefWidth="67.0" text="Hole 7: Player 1 MANCALA" textAlignment="CENTER" wrapText="true" />
+            <Label layoutX="255.0" layoutY="614.0" text="Hole 1" />
+            <Label layoutX="334.0" layoutY="637.0" text="Hole 2" />
+            <Label layoutX="488.0" layoutY="637.0" text="Hole 3" />
+            <Label layoutX="645.0" layoutY="637.0" text="Hole 4" />
+            <Label layoutX="800.0" layoutY="637.0" text="Hole 5" />
+            <Label layoutX="910.0" layoutY="577.0" text="Hole 6" />
+            <Label fx:id="value12" layoutX="170.0" layoutY="106.0" text="0" textFill="#f8f4f4">
+               <font>
+                  <Font size="39.0" />
+               </font>
+            </Label>
+            <Label fx:id="value11" layoutX="314.0" layoutY="60.0" text="0" textFill="#f8f4f4">
+               <font>
+                  <Font size="39.0" />
+               </font>
+            </Label>
+            <Label fx:id="value10" layoutX="478.0" layoutY="60.0" text="0" textFill="#f8f4f4">
+               <font>
+                  <Font size="39.0" />
+               </font>
+            </Label>
+            <Label fx:id="value9" layoutX="648.0" layoutY="60.0" text="0" textFill="#f8f4f4">
+               <font>
+                  <Font size="39.0" />
+               </font>
+            </Label>
+            <Label fx:id="value8" layoutX="823.0" layoutY="60.0" text="0" textFill="#f8f4f4">
+               <font>
+                  <Font size="39.0" />
+               </font>
+            </Label>
+            <Label fx:id="value7" layoutX="969.0" layoutY="106.0" text="0" textFill="#f8f4f4">
+               <font>
+                  <Font size="39.0" />
+               </font>
+            </Label>
+            <Label fx:id="value6" layoutX="1055.0" layoutY="362.0" text="0" textFill="#f8f4f4">
+               <font>
+                  <Font size="39.0" />
+               </font>
+            </Label>
+            <Label fx:id="value5" layoutX="969.0" layoutY="632.0" text="0" textFill="#f8f4f4">
+               <font>
+                  <Font size="39.0" />
+               </font>
+            </Label>
+            <Label fx:id="value4" layoutX="803.0" layoutY="698.0" text="0" textFill="#f8f4f4">
+               <font>
+                  <Font size="39.0" />
+               </font>
+            </Label>
+            <Label fx:id="value3" layoutX="651.0" layoutY="698.0" text="0" textFill="#f8f4f4">
+               <font>
+                  <Font size="39.0" />
+               </font>
+            </Label>
+            <Label fx:id="value2" layoutX="488.0" layoutY="698.0" text="0" textFill="#f8f4f4">
+               <font>
+                  <Font size="39.0" />
+               </font>
+            </Label>
+            <Label fx:id="value1" layoutX="337.0" layoutY="698.0" text="0" textFill="#f8f4f4">
+               <font>
+                  <Font size="39.0" />
+               </font>
+            </Label>
+            <Label fx:id="value0" layoutX="192.0" layoutY="660.0" text="0" textFill="#f8f4f4">
+               <font>
+                  <Font size="39.0" />
+               </font>
+            </Label>
+            <Label fx:id="value13" layoutX="116.0" layoutY="372.0" text="0" textFill="#f8f4f4">
+               <font>
+                  <Font size="39.0" />
+               </font>
+            </Label>
+            <Label fx:id="turnLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="308.0" layoutY="231.0" prefHeight="360.0" prefWidth="571.0" text="Player 1 select pit!" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font size="31.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
