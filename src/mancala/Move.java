@@ -1,8 +1,9 @@
-package mancala;
+package application;
 //win conditions and adding up of holes upon win 
 //labels to show whose go it is and maybe highlighting which holes are playable?
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -16,11 +17,12 @@ public class Move {
 	private int player2ID = 2;
 	private int winner = -1;
 	private static int gameID = 0;
-	private static int player = 1;
+	private static int player = 0;
 	private static int waitingPlayer = 2;
 	private static int playerTurn = 1;
 	private static boolean repeatTurn = false;
 	private Label[] holeLabels;
+	private boolean vsCPU = true;
 	
 	@FXML Label value0;
 	@FXML Label value1;
@@ -38,7 +40,7 @@ public class Move {
 	@FXML Label value13;
 	@FXML Label turnLabel;
 	
-	public void initialize() {
+	public void initialize() throws InterruptedException {
 		for(int i = 0; i <= 13; ++i){
 				boardarray[i] = 4;
 			}
@@ -46,8 +48,27 @@ public class Move {
 		boardarray[13] = 0;
 		labelArray();
 		setValues();
+		player = playerStart();
 		System.out.println("Player " + getPlayer() +  " pick a hole!");
+		turnLabel.setText("Player " + Integer.toString(getPlayer()) + " select pit!");
+		if(vsCPU == true && player == 2) {
+			turnLabel.setText("CPU will act as Player 2. CPU's turn first: Click here for CPU to move.");
+		}
+		
 	}
+	
+	public int playerStart() { 
+		    Random random = new Random();
+		    boolean isOne = random.nextBoolean();
+		    if(isOne) {
+		    	return 1;
+		    }
+		    else {
+		    	incrPlayerTurn();
+		    	waitingPlayer = 1;
+		    	return 2;
+		    }
+		}
 
 	public int getPlayer() {
 		return player;
@@ -72,7 +93,7 @@ public class Move {
 		++playerTurn;
 	}
 
-	public void move (int[] boardarray, int indx) {
+	public void move (int[] boardarray, int indx) throws InterruptedException {
 		int t = 0;
 		if (hasWon() > 0){
 			if (hasWon() == 1){
@@ -93,17 +114,21 @@ public class Move {
 			int playerTurn =  getPlayerTurn();
 			int waitingPlayer =  getWaitingPlayer();
 			if (checkSelection( getBoardArray(), player, indx) == false){
-				turnLabel.setText("Hey! You are Player " + player + ", please select a pit from your side. Remember, you cannot select a Mancala.");
+				if(vsCPU == true && player == 2) { 
+					turnLabel.setText("Steady on there, Champ! Click here for CPU to move before you make your move!");
+				}
+				else {
+				turnLabel.setText("Hey! You are Player " + player + ", please select a pit from your side. Remember, you cannot select a Mancala or an empty pit!");
 				System.out.println("Error: You are player " + player + ", please select a pit from your side. You cannot select a Mancala.");
+				}
 			}
 			if(checkTurn(player, playerTurn) == true && checkSelection( getBoardArray(), player, indx) == true){
 				setBoardArray(redistributeStones(getBoardArray(), indx));
 				for(int i = 0; i < 14; ++i){
 			      	System.out.println(i + ": " + boardarray[i]);
 				}
-    		}
+			}
 		}
-		
 	}
 
 
@@ -276,6 +301,20 @@ public class Move {
 		return winner;
 	}
 	
+	public void cpuSelection() throws InterruptedException {
+		int selection = 0;
+		if(vsCPU == true && getPlayer() == 2) {
+			for (int i = 0; i < 14; ++i) { 
+				if (checkSelection(getBoardArray(), getPlayer(), i) == true) {
+					selection = i;
+				}
+			}
+		turnLabel.setText("CPU selected pit " + Integer.toString(selection) + "!");
+		move(getBoardArray(), selection);
+		System.out.println("CPU HAS CHOSEN" + selection);
+		}
+	}
+	
 	private void labelArray() {
 		holeLabels = new Label[14];
 		holeLabels[0] = value0;
@@ -302,56 +341,82 @@ public class Move {
 	
 	@FXML protected void changeTurnLabel() {
 		if(repeatTurn == true) {
-			turnLabel.setText("Last stone dropped in your Mancala! Player " + Integer.toString(getPlayer()) + " select another pit!");
+			if(vsCPU == true && getPlayer() == 2) {
+				turnLabel.setText("Last stone dropped in CPUs Mancala! Click here for CPU move.");
+			}
+			else {
+				turnLabel.setText("Last stone dropped in your Mancala! Player " + Integer.toString(getPlayer()) + " select another pit!");
+			}
 		}
 		else {
-		turnLabel.setText("Player " + Integer.toString(getPlayer()) + " select pit!");
+			if(vsCPU == true && getPlayer() == 2) {
+				turnLabel.setText("Click here for CPU move.");
+			}
+			else {
+				turnLabel.setText("Player " + Integer.toString(getPlayer()) + " select pit!");
+			}
 		}
 	}
 	
-
+	@FXML protected void cpuLabelClicked (MouseEvent event) throws InterruptedException {
+		cpuSelection();
+	}
 	
-	@FXML protected void clickedOn0 (MouseEvent event) {
+	@FXML protected void clickedOn0 (MouseEvent event) throws InterruptedException {
 		move(getBoardArray(), 0);
 	}
-	@FXML protected void clickedOn1 (MouseEvent event) {
+	@FXML protected void clickedOn1 (MouseEvent event) throws InterruptedException {
 		move(getBoardArray(), 1);
 	}
-	@FXML protected void clickedOn2 (MouseEvent event) {
+	@FXML protected void clickedOn2 (MouseEvent event) throws InterruptedException {
 		move(getBoardArray(), 2);
 	}
-	@FXML protected void clickedOn3 (MouseEvent event) {
+	@FXML protected void clickedOn3 (MouseEvent event) throws InterruptedException {
 		move(getBoardArray(), 3);
 	}
-	@FXML protected void clickedOn4 (MouseEvent event) {
+	@FXML protected void clickedOn4 (MouseEvent event) throws InterruptedException {
 		move(getBoardArray(), 4);
 	}
-	@FXML protected void clickedOn5 (MouseEvent event) {
+	@FXML protected void clickedOn5 (MouseEvent event) throws InterruptedException {
 		move(getBoardArray(), 5);
 	}
-	@FXML protected void clickedOn6 (MouseEvent event) {
+	@FXML protected void clickedOn6 (MouseEvent event) throws InterruptedException {
 		move(getBoardArray(), 6);
 	}
-	@FXML protected void clickedOn7 (MouseEvent event) {
-		move(getBoardArray(), 7);
+	@FXML protected void clickedOn7 (MouseEvent event) throws InterruptedException {
+		if(vsCPU == false) {
+			move(getBoardArray(), 7);
+		}
 	}
-	@FXML protected void clickedOn8 (MouseEvent event) {
-		move(getBoardArray(), 8);
+	@FXML protected void clickedOn8 (MouseEvent event) throws InterruptedException {
+		if(vsCPU == false) {
+			move(getBoardArray(), 8);
+		}
 	}
-	@FXML protected void clickedOn9 (MouseEvent event) {
-		move(getBoardArray(), 9);
+	@FXML protected void clickedOn9 (MouseEvent event) throws InterruptedException {
+		if(vsCPU == false) {
+			move(getBoardArray(), 9);
+		}
 	}
-	@FXML protected void clickedOn10 (MouseEvent event) {
-		move(getBoardArray(), 10);
+	@FXML protected void clickedOn10 (MouseEvent event) throws InterruptedException {
+		if(vsCPU == false) {
+			move(getBoardArray(), 10);
+		}
 	}
-	@FXML protected void clickedOn11 (MouseEvent event) {
-		move(getBoardArray(), 11);
+	@FXML protected void clickedOn11 (MouseEvent event) throws InterruptedException {
+		if(vsCPU == false) {
+			move(getBoardArray(), 11);
+		}
 	}
-	@FXML protected void clickedOn12 (MouseEvent event) {
-		move(getBoardArray(), 12);
+	@FXML protected void clickedOn12 (MouseEvent event) throws InterruptedException {
+		if(vsCPU == false) {
+			move(getBoardArray(), 12);
+		}
 	}
-	@FXML protected void clickedOn13 (MouseEvent event) {
-		move(getBoardArray(), 13);
+	@FXML protected void clickedOn13 (MouseEvent event) throws InterruptedException {
+		if(vsCPU == false) {
+			move(getBoardArray(), 13);
+		}
 	}
 	
 
