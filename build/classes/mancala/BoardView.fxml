@@ -1,120 +1,282 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Move">
-   <children>
-      <Pane layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="771.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mancala.Move">
+   <center>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <Circle fill="DODGERBLUE" layoutX="325.0" layoutY="88.0" onMouseClicked="#clickedOn11" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="DODGERBLUE" layoutX="659.0" layoutY="88.0" onMouseClicked="#clickedOn9" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="DODGERBLUE" layoutX="489.0" layoutY="88.0" onMouseClicked="#clickedOn10" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="DODGERBLUE" layoutX="830.0" layoutY="88.0" onMouseClicked="#clickedOn8" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="DODGERBLUE" layoutX="980.0" layoutY="134.0" onMouseClicked="#clickedOn7" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="DODGERBLUE" layoutX="181.0" layoutY="134.0" onMouseClicked="#clickedOn12" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
-            <Ellipse fill="DODGERBLUE" layoutX="1066.0" layoutY="400.0" onMouseClicked="#clickedOn6" radiusX="86.0" radiusY="205.0" stroke="BLACK" strokeType="INSIDE" />
-            <Ellipse fill="DODGERBLUE" layoutX="127.0" layoutY="417.0" onMouseClicked="#clickedOn13" radiusX="86.0" radiusY="205.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="DODGERBLUE" layoutX="203.0" layoutY="688.0" onMouseClicked="#clickedOn0" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="DODGERBLUE" layoutX="348.0" layoutY="726.0" onMouseClicked="#clickedOn1" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="DODGERBLUE" layoutX="502.0" layoutY="726.0" onMouseClicked="#clickedOn2" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="DODGERBLUE" layoutX="659.0" layoutY="726.0" onMouseClicked="#clickedOn3" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="DODGERBLUE" layoutX="814.0" layoutY="726.0" onMouseClicked="#clickedOn4" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="DODGERBLUE" layoutX="980.0" layoutY="660.0" onMouseClicked="#clickedOn5" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
-            <Label layoutX="199.0" layoutY="204.0" text="Hole 13 " />
-            <Label layoutX="311.0" layoutY="168.0" text="Hole 12" />
-            <Label layoutX="475.0" layoutY="168.0" text="Hole 11" />
-            <Label layoutX="645.0" layoutY="168.0" text="Hole 10" />
-            <Label layoutX="816.0" layoutY="168.0" text="Hole 9" />
-            <Label layoutX="900.0" layoutY="196.0" text="Hole 8" />
-            <Label layoutX="237.0" layoutY="409.0" prefHeight="87.0" prefWidth="67.0" text="Hole 14: Player 2 MANCALA" textAlignment="CENTER" wrapText="true" />
-            <Label layoutX="882.0" layoutY="409.0" prefHeight="80.0" prefWidth="67.0" text="Hole 7: Player 1 MANCALA" textAlignment="CENTER" wrapText="true" />
-            <Label layoutX="255.0" layoutY="614.0" text="Hole 1" />
-            <Label layoutX="334.0" layoutY="637.0" text="Hole 2" />
-            <Label layoutX="488.0" layoutY="637.0" text="Hole 3" />
-            <Label layoutX="645.0" layoutY="637.0" text="Hole 4" />
-            <Label layoutX="800.0" layoutY="637.0" text="Hole 5" />
-            <Label layoutX="910.0" layoutY="577.0" text="Hole 6" />
-            <Label fx:id="value12" layoutX="170.0" layoutY="106.0" text="0" textFill="#f8f4f4">
-               <font>
-                  <Font size="39.0" />
-               </font>
-            </Label>
-            <Label fx:id="value11" layoutX="314.0" layoutY="60.0" text="0" textFill="#f8f4f4">
-               <font>
-                  <Font size="39.0" />
-               </font>
-            </Label>
-            <Label fx:id="value10" layoutX="478.0" layoutY="60.0" text="0" textFill="#f8f4f4">
-               <font>
-                  <Font size="39.0" />
-               </font>
-            </Label>
-            <Label fx:id="value9" layoutX="648.0" layoutY="60.0" text="0" textFill="#f8f4f4">
-               <font>
-                  <Font size="39.0" />
-               </font>
-            </Label>
-            <Label fx:id="value8" layoutX="823.0" layoutY="60.0" text="0" textFill="#f8f4f4">
-               <font>
-                  <Font size="39.0" />
-               </font>
-            </Label>
-            <Label fx:id="value7" layoutX="969.0" layoutY="106.0" text="0" textFill="#f8f4f4">
-               <font>
-                  <Font size="39.0" />
-               </font>
-            </Label>
-            <Label fx:id="value6" layoutX="1055.0" layoutY="362.0" text="0" textFill="#f8f4f4">
-               <font>
-                  <Font size="39.0" />
-               </font>
-            </Label>
-            <Label fx:id="value5" layoutX="969.0" layoutY="632.0" text="0" textFill="#f8f4f4">
-               <font>
-                  <Font size="39.0" />
-               </font>
-            </Label>
-            <Label fx:id="value4" layoutX="803.0" layoutY="698.0" text="0" textFill="#f8f4f4">
-               <font>
-                  <Font size="39.0" />
-               </font>
-            </Label>
-            <Label fx:id="value3" layoutX="651.0" layoutY="698.0" text="0" textFill="#f8f4f4">
-               <font>
-                  <Font size="39.0" />
-               </font>
-            </Label>
-            <Label fx:id="value2" layoutX="488.0" layoutY="698.0" text="0" textFill="#f8f4f4">
-               <font>
-                  <Font size="39.0" />
-               </font>
-            </Label>
-            <Label fx:id="value1" layoutX="337.0" layoutY="698.0" text="0" textFill="#f8f4f4">
-               <font>
-                  <Font size="39.0" />
-               </font>
-            </Label>
-            <Label fx:id="value0" layoutX="192.0" layoutY="660.0" text="0" textFill="#f8f4f4">
-               <font>
-                  <Font size="39.0" />
-               </font>
-            </Label>
-            <Label fx:id="value13" layoutX="116.0" layoutY="372.0" text="0" textFill="#f8f4f4">
-               <font>
-                  <Font size="39.0" />
-               </font>
-            </Label>
-            <Label fx:id="turnLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="308.0" layoutY="231.0" prefHeight="360.0" prefWidth="571.0" text="Player 1 select pit!" textAlignment="CENTER" wrapText="true">
-               <font>
-                  <Font size="31.0" />
-               </font>
-            </Label>
+            <GridPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #c19b6c; -fx-background-radius: 20;" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <GridPane maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="98.0" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="401.0" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="9.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                     </rowConstraints>
+                     <children>
+                        <GridPane alignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="233.0" minHeight="10.0" prefHeight="153.0" vgrow="ALWAYS" />
+                              <RowConstraints maxHeight="128.0" minHeight="10.0" prefHeight="102.0" vgrow="ALWAYS" />
+                              <RowConstraints minHeight="10.0" prefHeight="130.0" vgrow="ALWAYS" />
+                           </rowConstraints>
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a57a45" height="100.0" onMouseClicked="#clickedOn12" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 25px; -fx-arc-width: 25px;" width="50.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                              </Rectangle>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a57a45" height="100.0" onMouseClicked="#clickedOn11" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 25px; -fx-arc-width: 25px;" width="50.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                              </Rectangle>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a57a45" height="100.0" onMouseClicked="#clickedOn10" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 25px; -fx-arc-width: 25px;" width="50.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                              </Rectangle>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a57a45" height="100.0" onMouseClicked="#clickedOn9" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 25px; -fx-arc-width: 25px;" width="50.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                              </Rectangle>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a57a45" height="100.0" onMouseClicked="#clickedOn8" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 25px; -fx-arc-width: 25px;" width="50.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                              </Rectangle>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a57a45" height="100.0" onMouseClicked="#clickedOn7" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 25px; -fx-arc-width: 25px;" width="50.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                              </Rectangle>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a57a45" height="100.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 25px; -fx-arc-width: 25px;" width="50.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                              </Rectangle>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a57a45" height="100.0" onMouseClicked="#clickedOn5" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 25px; -fx-arc-width: 25px;" width="50.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                              </Rectangle>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a57a45" height="100.0" onMouseClicked="#clickedOn4" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 25px; -fx-arc-width: 25px;" width="50.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                              </Rectangle>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a57a45" height="100.0" onMouseClicked="#clickedOn3" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 25px; -fx-arc-width: 25px;" width="50.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                              </Rectangle>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a57a45" height="100.0" onMouseClicked="#clickedOn2" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 25px; -fx-arc-width: 25px;" width="50.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                              </Rectangle>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a57a45" height="100.0" onMouseClicked="#clickedOn1" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 25px; -fx-arc-width: 25px;" width="50.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                              </Rectangle>
+                              <Label fx:id="value12" onMouseClicked="#clickedOn12" text="0" textFill="#f8f4f4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font size="39.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="value11" onMouseClicked="#clickedOn11" text="0" textFill="#f8f4f4" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font size="39.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="value10" onMouseClicked="#clickedOn10" text="0" textFill="#f8f4f4" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font size="39.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="value9" onMouseClicked="#clickedOn9" text="0" textFill="#f8f4f4" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font size="39.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="value8" onMouseClicked="#clickedOn8" text="0" textFill="#f8f4f4" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font size="39.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="value7" onMouseClicked="#clickedOn7" text="0" textFill="#f8f4f4" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font size="39.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="value5" onMouseClicked="#clickedOn5" text="0" textFill="#f8f4f4" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font size="39.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="value4" onMouseClicked="#clickedOn4" text="0" textFill="#f8f4f4" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font size="39.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="value3" onMouseClicked="#clickedOn3" text="0" textFill="#f8f4f4" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font size="39.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="value2" onMouseClicked="#clickedOn2" text="0" textFill="#f8f4f4" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font size="39.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="value1" onMouseClicked="#clickedOn1" text="0" textFill="#f8f4f4" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font size="39.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="value0" text="0" textFill="#f8f4f4" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font size="39.0" />
+                                 </font>
+                              </Label>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="100.0" onMouseClicked="#clickedOn0" stroke="#ffffff00" strokeType="INSIDE" style="-fx-arc-height: 25px; -fx-arc-width: 25px;" width="50.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                              </Rectangle>
+                           </children>
+                        </GridPane>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a57a45" height="320.0" onMouseClicked="#clickedOn13" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 50px; -fx-arc-width: 50px;" width="81.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Rectangle>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a57a45" height="317.0" onMouseClicked="#clickedOn6" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 50px; -fx-arc-width: 50px;" width="88.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Rectangle>
+                        <Label fx:id="value13" onMouseClicked="#clickedOn13" text="0" textFill="#f8f4f4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <font>
+                              <Font size="39.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="value6" onMouseClicked="#clickedOn6" text="0" textFill="#f8f4f4" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <font>
+                              <Font size="39.0" />
+                           </font>
+                        </Label>
+                        <Label text="Score" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <GridPane.margin>
+                              <Insets bottom="60.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Player 1" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <GridPane.margin>
+                              <Insets bottom="90.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Score" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <GridPane.margin>
+                              <Insets bottom="60.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Player 2" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <GridPane.margin>
+                              <Insets bottom="90.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </GridPane>
+               </children>
+               <effect>
+                  <DropShadow />
+               </effect>
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </GridPane.margin>
+            </GridPane>
          </children>
-      </Pane>
-   </children>
-</AnchorPane>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </GridPane>
+   </center>
+   <top>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" stroke="BLACK" strokeType="INSIDE" width="200.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </Rectangle>
+   </top>
+   <left>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" stroke="BLACK" strokeType="INSIDE" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" stroke="BLACK" strokeType="INSIDE" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </Rectangle>
+   </right>
+   <bottom>
+      <Label fx:id="turnLabel" onMouseClicked="#cpuLabelClicked" text="Player 1 select pit!" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="20.0" />
+         </BorderPane.margin>
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+   </bottom>
+</BorderPane>

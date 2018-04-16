@@ -51,6 +51,7 @@ public class FXMLLoginPageController implements Initializable {
          Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             if (login())
              {
+                setCurrentUser();
                 app_stage.setScene(home_page_scene);
                 app_stage.show();
              }
@@ -103,7 +104,30 @@ public class FXMLLoginPageController implements Initializable {
         return let_in;
     }
     
-    
+    public void setCurrentUser()
+    {
+        System.out.println("INSERT INTO CurrentUser (CurrentUsers) VALUES ('" + username_box.getText() + "')");
+      
+        Connection c;
+        Statement stmt;
+        
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:mancala.db");
+            c.setAutoCommit(false);
+            System.out.println("Opened database successfully");
+            stmt = c.createStatement();
+            stmt.executeUpdate("INSERT INTO CurrentUser (CurrentUsers) VALUES ('" + username_box.getText() + "')");
+            stmt.close();
+            c.commit();
+            c.close();
+        } 
+        
+        catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        System.out.println("Operation done successfully");
+    }
     
     
     @Override

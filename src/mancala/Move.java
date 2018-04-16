@@ -1,15 +1,11 @@
-package application;
+package mancala;
 //win conditions and adding up of holes upon win 
 //labels to show whose go it is and maybe highlighting which holes are playable?
 
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 
 public class Move {
 	private int[] boardarray = new int[14];

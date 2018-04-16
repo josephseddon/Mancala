@@ -7,3 +7,34 @@ and open the template in the editor.
     Created on : 09-Apr-2018, 02:15:21
     Author     : josephseddpm
 */
+
+.fillblue_button{
+    -fx-border-width: 2px;
+    -fx-background-color: #242F60;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-cursor: HAND;
+}
+
+.fillgreen_button{
+    -fx-border-width: 2px;
+    -fx-background-color:  #14866d;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-cursor: HAND;
+}
+
+.fillred_button{
+    -fx-border-width: 2px;
+    -fx-background-color:  #600;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-cursor: HAND;
+}
+
+.mainmenu_button{
+    -fx-margin: 10px;
+}

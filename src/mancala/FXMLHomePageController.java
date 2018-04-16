@@ -30,11 +30,24 @@ public class FXMLHomePageController implements Initializable {
      */
     
     @FXML 
-    private Button startgameButton;
+    private Button startnewgameButton;
+    
     @FXML 
-    public void startgameButtonAction(ActionEvent event) throws IOException {
-         System.out.println("Start game button clicked");
+    private Button startoldgameButton;
+    
+    @FXML 
+    public void startnewgameButtonAction(ActionEvent event) throws IOException {
+         System.out.println("Start new game button clicked");
          Parent home_page_parent = FXMLLoader.load(getClass().getResource("BoardView.fxml"));
+         Scene home_page_scene = new Scene(home_page_parent);
+         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+         app_stage.setScene(home_page_scene);
+         app_stage.show();
+    }
+    
+    public void startoldgameButtonAction(ActionEvent event) throws IOException {
+         System.out.println("Start old game button clicked");
+         Parent home_page_parent = FXMLLoader.load(getClass().getResource("BoardViewOld.fxml"));
          Scene home_page_scene = new Scene(home_page_parent);
          Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          app_stage.setScene(home_page_scene);
