@@ -1,14 +1,22 @@
-package mancala;
-//win conditions and adding up of holes upon win 
-//labels to show whose go it is and maybe highlighting which holes are playable?
+package application;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+
+/** 
+ * This class is responsiblie for the game mechanics and is the controller class for BoardView.fxml
+ * @author Jonathon Mateo
+ *
+ */
+
 
 public class Move {
-	private int[] boardarray = new int[14];
+	private int[] boardArray = new int[14];
 	private int player1ID = 1;
 	private int player2ID = 2;
 	private int winner = -1;
@@ -36,27 +44,35 @@ public class Move {
 	@FXML Label value13;
 	@FXML Label turnLabel;
 	
+	/**
+	 * initialise the game, setting pit values and correct label text.
+	 * @throws InterruptedException
+	 */
+	
 	public void initialize() throws InterruptedException {
-		for(int i = 0; i <= 13; ++i){
-				boardarray[i] = 4;
+		for(int i = 0; i <= 13; ++i) {
+				boardArray[i] = 4;
 			}
-		boardarray[6] = 0;
-		boardarray[13] = 0;
+		boardArray[6] = 0;
+		boardArray[13] = 0;
 		labelArray();
 		setValues();
 		player = playerStart();
-		System.out.println("Player " + getPlayer() +  " pick a hole!");
 		turnLabel.setText("Player " + Integer.toString(getPlayer()) + " select pit!");
-		if(vsCPU == true && player == 2) {
+		if (vsCPU == true && player == 2) {
 			turnLabel.setText("CPU will act as Player 2. CPU's turn first: Click here for CPU to move.");
 		}
 		
 	}
 	
+	/**
+	 * chooses random player to start.
+	 * @return random player number.
+	 */
 	public int playerStart() { 
 		    Random random = new Random();
 		    boolean isOne = random.nextBoolean();
-		    if(isOne) {
+		    if (isOne) {
 		    	return 1;
 		    }
 		    else {
@@ -66,37 +82,68 @@ public class Move {
 		    }
 		}
 
+	/**
+	 * Get the current active player.
+	 * @return the current active player number.
+	 */
 	public int getPlayer() {
 		return player;
 	}
+	
+	/**
+	 * Set the new active player.
+	 * @param a the new active player number.
+	 */
 	public void setPlayer(int a) {
 		player = a;
 	}
 
+	/**
+	 * Get the current waiting player.
+	 * @return the current waiting player number.
+	 */
 	public int getWaitingPlayer() {
 		return waitingPlayer;
 	}
-	public static void setWaitingPlayer(int a){
+	
+	/**
+	 * Set the new waiting player.
+	 * @param a the new waiting player.
+	 */
+	public static void setWaitingPlayer(int a) {
 		waitingPlayer = a;
 	}
 
 
-
-	public int getPlayerTurn(){
+	/**
+	 * Get the number of turns that have been made.
+	 * @return the number of turns that have been made.
+	 */
+	public int getPlayerTurn() {
 		return playerTurn;
 	}
-	public void incrPlayerTurn(){
+	
+	/**
+	 * Increment the player turn value.
+	 */
+	public void incrPlayerTurn() {
 		++playerTurn;
 	}
 
-	public void move (int[] boardarray, int indx) throws InterruptedException {
+	/**
+	 * Executes the move when player/cpu selects pit. Evaluates win condition and ensures valid selection of pit.
+	 * @param boardArray
+	 * @param indx
+	 * @throws InterruptedException
+	 */
+	public void move(int[] boardArray, int indx) throws InterruptedException {
 		int t = 0;
 		if (hasWon() > 0){
-			if (hasWon() == 1){
+			if (hasWon() == 1) {
 				turnLabel.setText("Player 1 wins! Congratulations!");
 				System.out.println("Player 1 wins!");
 			}
-			if (hasWon() == 2){
+			if (hasWon() == 2) {
 				turnLabel.setText("Player 2 wins! Congratulations!");
 				System.out.println("Player 2 Wins!");
 			}
@@ -105,12 +152,12 @@ public class Move {
 				System.out.println("Draw!");
 			}
 		}
-		if (hasWon() < 0){
+		if (hasWon() < 0) {
 			int player =  getPlayer();
 			int playerTurn =  getPlayerTurn();
 			int waitingPlayer =  getWaitingPlayer();
-			if (checkSelection( getBoardArray(), player, indx) == false){
-				if(vsCPU == true && player == 2) { 
+			if (checkSelection(getBoardArray(), player, indx) == false) {
+				if (vsCPU == true && player == 2) { 
 					turnLabel.setText("Steady on there, Champ! Click here for CPU to move before you make your move!");
 				}
 				else {
@@ -118,120 +165,151 @@ public class Move {
 				System.out.println("Error: You are player " + player + ", please select a pit from your side. You cannot select a Mancala.");
 				}
 			}
-			if(checkTurn(player, playerTurn) == true && checkSelection( getBoardArray(), player, indx) == true){
+			if (checkTurn(player, playerTurn) == true && checkSelection( getBoardArray(), player, indx) == true){
 				setBoardArray(redistributeStones(getBoardArray(), indx));
-				for(int i = 0; i < 14; ++i){
-			      	System.out.println(i + ": " + boardarray[i]);
+				for(int i = 0; i < 14; ++i) {
+			      	System.out.println(i + ": " + boardArray[i]);
 				}
 			}
 		}
 	}
 
-
-	public boolean checkTurn (int player, int playerTurn){
-		if(playerTurn % 2 == 0 && player == 1){
+	/**
+	 * Checks the player who has selected is the correct player with reference to turn.
+	 * @param player
+	 * @param playerTurn
+	 * @return
+	 */
+	public boolean checkTurn(int player, int playerTurn) {
+		if (playerTurn % 2 == 0 && player == 1) {
 			return false;
 		}
-		if(playerTurn % 2 == 1 && player == 2){
-			return false;
-		}
-		return true;
-	}
-
-	public boolean checkSelection (int[] boardarray, int player, int indx){
-		if(player == 1 && indx > 6 || player == 2 && indx < 7){
-			return false;
-		}
-		if(indx == 6 || indx == 13){
-			return false;
-		}
-		if(boardarray[indx] == 0){
+		if (playerTurn % 2 == 1 && player == 2) {
 			return false;
 		}
 		return true;
 	}
 
-	public int[] redistributeStones ( int[] boardarray, int indx){
+	/**
+	 * Checks the pit selection is valid in terms of side of the board and number of stones and if it is a store.
+	 * @param boardArray
+	 * @param player
+	 * @param indx
+	 * @return
+	 */
+	public boolean checkSelection (int[] boardArray, int player, int indx) {
+		if (player == 1 && indx > 6 || player == 2 && indx < 7){
+			return false;
+		}
+		if (indx == 6 || indx == 13) {
+			return false;
+		}
+		if (boardArray[indx] == 0) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Redistributes the stones based on pit selection, increments player turn when end turn condition met.
+	 * @param boardArray
+	 * @param indx
+	 * @return
+	 */
+	public int[] redistributeStones ( int[] boardArray, int indx) {
 			int	hold =  getStoneCount(indx);
-			boardarray[indx] = 0;
+			boardArray[indx] = 0;
 			int lasthole = 0;
-			for(int i = indx + 1; i < 14 && hold > 0; ++i){
-					if( isOppMancalaStore(i,  getPlayer()) == false){
-						++boardarray[i];
+			for(int i = indx + 1; i < 14 && hold > 0; ++i) {
+					if ( isOppMancalaStore(i,  getPlayer()) == false) {
+						++boardArray[i];
 						--hold;
 						lasthole = i;
-						System.out.println("hold: " + hold + " last hole: " + lasthole + " stones: " + boardarray[lasthole] + "player = " +  getPlayer() +  isOwnMancalaStore(lasthole,  getPlayer()));
 					}
-						if(i == 13 && hold > 0){
-							for(int j = 0; j < 14 && hold > 0; ++j){
-								if( isOppMancalaStore(j,  getPlayer()) == false){
-								++boardarray[j];
+						if (i == 13 && hold > 0){
+							for(int j = 0; j < 14 && hold > 0; ++j) {
+								if ( isOppMancalaStore(j,  getPlayer()) == false) {
+								++boardArray[j];
 								--hold;
 								lasthole = j;
-								System.out.println("hold: " + hold + " last hole: " + lasthole + " stones: " + boardarray[lasthole] + "player = " +  getPlayer() +  isOwnMancalaStore(lasthole,  getPlayer()));
 								}
 							}
 						}
 			}
 
-			if(boardarray[lasthole] == 1 && hold == 0 &&  isOwnMancalaStore(lasthole,  getPlayer()) == false){
+			if (boardArray[lasthole] == 1 && hold == 0 &&  isOwnMancalaStore(lasthole,  getPlayer()) == false) {
 					repeatTurn = false;
-						incrPlayerTurn();
-						int t = player;
-						player = waitingPlayer;
-						waitingPlayer = t;
-						setPlayer(player);
-						setWaitingPlayer(waitingPlayer);
-						changeTurnLabel();
-						System.out.println("Player " +  getPlayer() + " select pit.");
-					System.out.println("last stone in empty hole");
+					incrPlayerTurn();
+					int t = player;
+					player = waitingPlayer;
+					waitingPlayer = t;
+					setPlayer(player);
+					setWaitingPlayer(waitingPlayer);
+					changeTurnLabel();
 					setValues();
-					return boardarray;
+					return boardArray;
 			}
-			if(boardarray[lasthole] > 1 && hold == 0 &&  isOwnMancalaStore(lasthole,  getPlayer()) == false){
-				redistributeStones(boardarray, lasthole);
+			if (boardArray[lasthole] > 1 && hold == 0 &&  isOwnMancalaStore(lasthole,  getPlayer()) == false) {
+				redistributeStones(boardArray, lasthole);
 				System.out.println("recursed");
-				return boardarray;
+				return boardArray;
 			}
-			if(isOwnMancalaStore(lasthole,  getPlayer()) == true && hold == 0){
+			if (isOwnMancalaStore(lasthole,  getPlayer()) == true && hold == 0) {
 				repeatTurn = true;
 				changeTurnLabel();
-				System.out.println("Last stone dropped in your Mancala! Player " +  getPlayer() + " select hole: ");
 				setValues();
-				return boardarray;
+				return boardArray;
 				}
-			System.out.println("end reached");
-			return boardarray;
-	
+			return boardArray;
 	}
 	
-	public void main(String args[]){
-		System.out.println("Player " + player + " select pit.");
-		//ADD FIRST EVENT HERE
-		
+	public void main(String args[]) {
 	}
 	
-	public int getGameID(){
+	/**
+	 * Get the current gameID.
+	 * @return the current GameID.
+	 */
+	public int getGameID() {
 		return gameID;
 	}
 
-
-	public int[] getBoardArray(){
-		return boardarray;
+	/**
+	 * Get the current state of the Board Array.
+	 * @return Board Array.
+	 */
+	public int[] getBoardArray() {
+		return boardArray;
 	}
 
-	public int[] setBoardArray(int[] postMove){
-		boardarray = postMove;
-		return boardarray;
+	/**
+	 * Set new values for Board Array
+	 * @param postMove
+	 * @return the Board Array post move.
+	 */
+	public int[] setBoardArray(int[] postMove) {
+		boardArray = postMove;
+		return boardArray;
 	}
 
-	public int getStoneCount(int indx){
-		int stoneCount = boardarray[indx];
+	/**
+	 * Get the number of stones in a pit.
+	 * @param indx number of the pit.
+	 * @return the number of stones in the corresponding pit.
+	 */
+	public int getStoneCount(int indx) {
+		int stoneCount = boardArray[indx];
 		return stoneCount;
 	}
 
-	public boolean isOppMancalaStore(int indx, int player){
-		if ((indx == 6 && player == 2)||(indx == 13 && player == 1)){
+	/**
+	 * Checks if the pit selection is the opponent's mancala store.
+	 * @param indx of the selected pit.
+	 * @param current player
+	 * @return boolean true if selection is opponent's mancala store.
+	 */
+	public boolean isOppMancalaStore(int indx, int player) {
+		if ((indx == 6 && player == 2)||(indx == 13 && player == 1)) {
 			return true;
 		}
 		else {
@@ -239,8 +317,14 @@ public class Move {
 		}
 	}
 
-	public boolean isOwnMancalaStore(int indx, int player){
-		if ((indx == 6 && player == 1)||(indx == 13 && player == 2)){
+	/**
+	 * Checks if the pit selection is the owns mancala store.
+	 * @param indx of the selected pit.
+	 * @param current player
+	 * @return boolean true if selection is own mancala store.
+	 */
+	public boolean isOwnMancalaStore(int indx, int player) {
+		if ((indx == 6 && player == 1)||(indx == 13 && player == 2)) {
 			return true;
 		}
 		else {
@@ -248,58 +332,70 @@ public class Move {
 		}
 	}
 
-
-	public int getPlayerAssignment(int indx){
-		if(indx <= 6){
+	/**
+	 * Get the player assignment for a pit.
+	 * @param indx of selected pit.
+	 * @return player number of player whose side it is on.
+	 */
+	public int getPlayerAssignment(int indx) {
+		if (indx <= 6){
 			return 1;
 		}
-		if(indx > 6){
+		if (indx > 6){
 			return 2;
 		}
 		return -1;
 	}
-
-	public int hasWon(){
+	
+	/**
+	 * Checks win condition.
+	 * @return integer corresponding to player who has won. Or 3 for a draw, -1 for not over.
+	 */
+	public int hasWon() {
 		int sideCount1 = 0;
 		int sideCount2 = 0;
 		int mancalaCount1 = 0;
 		int mancalaCount2 = 0;
 		for(int i = 0; i < 6 ; ++i){
-				sideCount1 = sideCount1 + boardarray[i];
-				sideCount2 = sideCount2 + boardarray[i+7];
+				sideCount1 = sideCount1 + boardArray[i];
+				sideCount2 = sideCount2 + boardArray[i+7];
 		}
-		if(sideCount1 == 0) {
-			mancalaCount1 = boardarray[6] + sideCount2;
-			mancalaCount2 = boardarray[13];
-			if (mancalaCount1 > mancalaCount2){
+		if (sideCount1 == 0) {
+			mancalaCount1 = boardArray[6] + sideCount2;
+			mancalaCount2 = boardArray[13];
+			if (mancalaCount1 > mancalaCount2) {
 				winner = 1;
 			}
-			if (mancalaCount1 < mancalaCount2){
+			if (mancalaCount1 < mancalaCount2) {
 				winner = 2;
 			}
-			if (mancalaCount1 == mancalaCount2){
+			if (mancalaCount1 == mancalaCount2) {
 				winner = 3;
 			}
 		}
-		if(sideCount2 == 0) {
-			mancalaCount2 = boardarray[13] + sideCount1;
-			mancalaCount1 = boardarray[6];
-			if (mancalaCount1 > mancalaCount2){
+		if (sideCount2 == 0) {
+			mancalaCount2 = boardArray[13] + sideCount1;
+			mancalaCount1 = boardArray[6];
+			if (mancalaCount1 > mancalaCount2) {
 				winner = 1;
 			}
-			if (mancalaCount1 < mancalaCount2){
+			if (mancalaCount1 < mancalaCount2) {
 				winner = 2;
 			}
-			if (mancalaCount1 == mancalaCount2){
+			if (mancalaCount1 == mancalaCount2) {
 				winner = 3;
 			}
 		}
 		return winner;
 	}
 	
+	/**
+	 * Determines pit selection of CPU player.
+	 * @throws InterruptedException
+	 */
 	public void cpuSelection() throws InterruptedException {
 		int selection = 0;
-		if(vsCPU == true && getPlayer() == 2) {
+		if (vsCPU == true && getPlayer() == 2) {
 			for (int i = 0; i < 14; ++i) { 
 				if (checkSelection(getBoardArray(), getPlayer(), i) == true) {
 					selection = i;
@@ -307,10 +403,12 @@ public class Move {
 			}
 		turnLabel.setText("CPU selected pit " + Integer.toString(selection) + "!");
 		move(getBoardArray(), selection);
-		System.out.println("CPU HAS CHOSEN" + selection);
 		}
 	}
 	
+	/**
+	 * Populates pit labels with corresponding values.
+	 */
 	private void labelArray() {
 		holeLabels = new Label[14];
 		holeLabels[0] = value0;
@@ -329,15 +427,21 @@ public class Move {
 	    holeLabels[13] = value13;
 	}
 
+	/**
+	 * Changes values displayed in labels to corresponding values in Board Array.
+	 */
 	@FXML protected void setValues() { 
 		for(int i = 0; i < 14; ++i) {
-			holeLabels[i].setText(Integer.toString(boardarray[i]));
+			holeLabels[i].setText(Integer.toString(boardArray[i]));
 		}
 	}
 	
+	/** 
+	 * Changes text in game label to inform player what to do next.
+	 */
 	@FXML protected void changeTurnLabel() {
-		if(repeatTurn == true) {
-			if(vsCPU == true && getPlayer() == 2) {
+		if (repeatTurn == true) {
+			if (vsCPU == true && getPlayer() == 2) {
 				turnLabel.setText("Last stone dropped in CPUs Mancala! Click here for CPU move.");
 			}
 			else {
@@ -345,7 +449,7 @@ public class Move {
 			}
 		}
 		else {
-			if(vsCPU == true && getPlayer() == 2) {
+			if (vsCPU == true && getPlayer() == 2) {
 				turnLabel.setText("Click here for CPU move.");
 			}
 			else {
@@ -354,67 +458,152 @@ public class Move {
 		}
 	}
 	
+	/**
+	 * Executes CPU move when label clicked.
+	 * @param event
+	 * @throws InterruptedException
+	 */
 	@FXML protected void cpuLabelClicked (MouseEvent event) throws InterruptedException {
 		cpuSelection();
 	}
 	
-	@FXML protected void clickedOn0 (MouseEvent event) throws InterruptedException {
+	/**
+	 * Executes player move when pit 0 is clicked.
+	 * @param event
+	 * @throws InterruptedException
+	 */
+	@FXML protected void clickedOn0(MouseEvent event) throws InterruptedException {
 		move(getBoardArray(), 0);
 	}
-	@FXML protected void clickedOn1 (MouseEvent event) throws InterruptedException {
+	
+	/**
+	 * Executes player move when pit 1 is clicked.
+	 * @param event
+	 * @throws InterruptedException
+	 */
+	@FXML protected void clickedOn1(MouseEvent event) throws InterruptedException {
 		move(getBoardArray(), 1);
 	}
-	@FXML protected void clickedOn2 (MouseEvent event) throws InterruptedException {
+	
+	/**
+	 * Executes player move when pit 2 is clicked.
+	 * @param event
+	 * @throws InterruptedException
+	 */
+	@FXML protected void clickedOn2(MouseEvent event) throws InterruptedException {
 		move(getBoardArray(), 2);
 	}
-	@FXML protected void clickedOn3 (MouseEvent event) throws InterruptedException {
+	
+	/**
+	 * Executes player move when pit 3 is clicked.
+	 * @param event
+	 * @throws InterruptedException
+	 */
+	@FXML protected void clickedOn3(MouseEvent event) throws InterruptedException {
 		move(getBoardArray(), 3);
 	}
-	@FXML protected void clickedOn4 (MouseEvent event) throws InterruptedException {
+	
+	/**
+	 * Executes player move when pit 4 is clicked.
+	 * @param event
+	 * @throws InterruptedException
+	 */
+	@FXML protected void clickedOn4(MouseEvent event) throws InterruptedException {
 		move(getBoardArray(), 4);
 	}
-	@FXML protected void clickedOn5 (MouseEvent event) throws InterruptedException {
+	
+	/**
+	 * Executes player move when pit 5 is clicked.
+	 * @param event
+	 * @throws InterruptedException
+	 */
+	@FXML protected void clickedOn5(MouseEvent event) throws InterruptedException {
 		move(getBoardArray(), 5);
 	}
-	@FXML protected void clickedOn6 (MouseEvent event) throws InterruptedException {
+	
+	/**
+	 * Executes player move when pit 6 is clicked.
+	 * @param event
+	 * @throws InterruptedException
+	 */
+	@FXML protected void clickedOn6(MouseEvent event) throws InterruptedException {
 		move(getBoardArray(), 6);
 	}
-	@FXML protected void clickedOn7 (MouseEvent event) throws InterruptedException {
-		if(vsCPU == false) {
+	
+	/**
+	 * Executes player move when pit 7 is clicked.
+	 * @param event
+	 * @throws InterruptedException
+	 */
+	@FXML protected void clickedOn7(MouseEvent event) throws InterruptedException {
+		if (vsCPU == false) {
 			move(getBoardArray(), 7);
 		}
 	}
-	@FXML protected void clickedOn8 (MouseEvent event) throws InterruptedException {
-		if(vsCPU == false) {
+	
+	/**
+	 * Executes player move when pit 8 is clicked.
+	 * @param event
+	 * @throws InterruptedException
+	 */
+	@FXML protected void clickedOn8(MouseEvent event) throws InterruptedException {
+		if (vsCPU == false) {
 			move(getBoardArray(), 8);
 		}
 	}
-	@FXML protected void clickedOn9 (MouseEvent event) throws InterruptedException {
-		if(vsCPU == false) {
+	
+	/**
+	 * Executes player move when pit 9 is clicked.
+	 * @param event
+	 * @throws InterruptedException
+	 */
+	@FXML protected void clickedOn9(MouseEvent event) throws InterruptedException {
+		if (vsCPU == false) {
 			move(getBoardArray(), 9);
 		}
 	}
-	@FXML protected void clickedOn10 (MouseEvent event) throws InterruptedException {
-		if(vsCPU == false) {
+	
+	/**
+	 * Executes player move when pit 10 is clicked.
+	 * @param event
+	 * @throws InterruptedException
+	 */
+	@FXML protected void clickedOn10(MouseEvent event) throws InterruptedException {
+		if (vsCPU == false) {
 			move(getBoardArray(), 10);
 		}
 	}
-	@FXML protected void clickedOn11 (MouseEvent event) throws InterruptedException {
-		if(vsCPU == false) {
+	
+	/**
+	 * Executes player move when pit 11 is clicked.
+	 * @param event
+	 * @throws InterruptedException
+	 */
+	@FXML protected void clickedOn11(MouseEvent event) throws InterruptedException {
+		if (vsCPU == false) {
 			move(getBoardArray(), 11);
 		}
 	}
-	@FXML protected void clickedOn12 (MouseEvent event) throws InterruptedException {
-		if(vsCPU == false) {
+	
+	/**
+	 * Executes player move when pit 12 is clicked.
+	 * @param event
+	 * @throws InterruptedException
+	 */
+	@FXML protected void clickedOn12(MouseEvent event) throws InterruptedException {
+		if (vsCPU == false) {
 			move(getBoardArray(), 12);
 		}
 	}
-	@FXML protected void clickedOn13 (MouseEvent event) throws InterruptedException {
-		if(vsCPU == false) {
+	
+	/**
+	 * Executes player move when pit 13 is clicked.
+	 * @param event
+	 * @throws InterruptedException
+	 */
+	@FXML protected void clickedOn13(MouseEvent event) throws InterruptedException {
+		if (vsCPU == false) {
 			move(getBoardArray(), 13);
 		}
 	}
-	
-
-
 }
