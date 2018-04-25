@@ -44,7 +44,7 @@ public class FXMLLoginPageController implements Initializable {
     private Label usererror_Label; 
     
     @FXML
-    public void loginButtonAction(ActionEvent event) throws IOException {
+    public void loginButtonAction(Event event) throws IOException {
          System.out.println("Login button clicked");
          Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLHomePage.fxml"));
          Scene home_page_scene = new Scene(home_page_parent);
@@ -159,6 +159,20 @@ public class FXMLLoginPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        username_box.setOnKeyPressed(new EventHandler<KeyEvent>() {  
+    		  
+    	    @Override  
+    	    public void handle(KeyEvent event) {  
+    	        if(event.getCode() == KeyCode.ENTER) {
+    	        	try {
+						loginButtonAction(event);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+    	        }  
+    	    }  
+    	});
     }    
     
 }
