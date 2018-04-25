@@ -51,20 +51,22 @@ public class FXMLCreateUserController implements Initializable {
     private Button createuser_Button;
     
     public void createuserButtonAction(ActionEvent event) throws IOException {
-         System.out.println("Create User button clicked");
-         Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLUserCreated.fxml"));
-         Scene home_page_scene = new Scene(home_page_parent);
-         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            if (usertaken())
-             {
-                usertaken_Label.setText("Sorry, that username is taken. Please choose another");
-             }
-            else
+        System.out.println("Create User button clicked");
+        FXMLPictureSelectionController.create = true;
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLPictureSelection.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        
+           if (usertaken())
             {
-                createuser();
-                app_stage.setScene(home_page_scene);
-                app_stage.show();
+               usertaken_Label.setText("Sorry, that username is taken. Please choose another");
             }
+           else
+           {
+               createuser();
+               app_stage.setScene(home_page_scene);
+               app_stage.show();
+           }
     }
     
     public void createuser()
