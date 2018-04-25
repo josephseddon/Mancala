@@ -33,7 +33,7 @@ import javafx.scene.image.*;
 public class FXMLPictureSelectionController implements Initializable {
     
     @FXML Label picTitleLabel;
-    @FXML static Button cancelButton;
+    @FXML Button cancelButton;
     @FXML ImageView pic1Image;
     @FXML ImageView pic2Image;
     @FXML ImageView pic3Image;
