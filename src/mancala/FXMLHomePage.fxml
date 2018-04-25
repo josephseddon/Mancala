@@ -11,19 +11,20 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mancala.FXMLHomePageController">
    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="startnewgameButton" mnemonicParsing="false" onAction="#startnewgameButtonAction" styleClass="fillblue_button" stylesheets="@MancalaStyles.css" text="New Game (New design)">
+            <Button fx:id="startnewgameButton" mnemonicParsing="false" prefWidth="200.0" onAction="#startnewgameButtonAction" styleClass="fillgreen_button" stylesheets="@MancalaStyles.css" text="New Game">
                <VBox.margin>
                   <Insets bottom="15.0" />
                </VBox.margin></Button>
+            	<!-- 
             <Button fx:id="startoldgameButton" mnemonicParsing="false" onAction="#startoldgameButtonAction" styleClass="fillgreen_button" stylesheets="@MancalaStyles.css" text="New Game (Old design)">
                <VBox.margin>
                   <Insets bottom="15.0" />
                </VBox.margin>
                <cursor>
                   <Cursor fx:constant="HAND" />
-               </cursor></Button>
+               </cursor></Button> -->
             <Button mnemonicParsing="false" prefWidth="200.0" stylesheets="@MancalaStyles.css" text="Your profile">
                <styleClass>
                   <String fx:value="fillblue_button" />
@@ -42,7 +43,7 @@
                   <Insets bottom="15.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" prefWidth="200.0" stylesheets="@MancalaStyles.css" text="Game History">
+            <Button mnemonicParsing="false" prefWidth="200.0" onAction="#gameHistoryButtonAction" stylesheets="@MancalaStyles.css" text="Game History">
                <styleClass>
                   <String fx:value="fillblue_button" />
                   <String fx:value="mainmenu_button" />
@@ -51,7 +52,7 @@
                   <Insets bottom="15.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" prefWidth="200.0" styleClass="fillred_button" stylesheets="@MancalaStyles.css" text="Log out">
+            <Button mnemonicParsing="false" prefWidth="200.0" onAction="#logOutButtonAction" styleClass="fillred_button" stylesheets="@MancalaStyles.css" text="Log out">
                <VBox.margin>
                   <Insets bottom="15.0" />
                </VBox.margin>
