@@ -3,30 +3,79 @@
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mancala.FXMLHomePageController">
    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="profilePicture" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-            <Button fx:id="startgameButton" mnemonicParsing="false" onAction="#startgameButtonAction" text="Start Game" />
-            <Button fx:id="profileButton" mnemonicParsing="false" onAction="#profileButtonClick" text="View Profile" />
-            <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logoutButtonClick" text="Logout" />
+            <Button fx:id="startnewgameButton" mnemonicParsing="false" onAction="#startnewgameButtonAction" prefWidth="200.0" styleClass="fillgreen_button" stylesheets="@MancalaStyles.css" text="New Game">
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin></Button>
+            	<!-- 
+            <Button fx:id="startoldgameButton" mnemonicParsing="false" onAction="#startoldgameButtonAction" styleClass="fillgreen_button" stylesheets="@MancalaStyles.css" text="New Game (Old design)">
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button> -->
+            <Button fx:id="profileButton" mnemonicParsing="false" onAction="#profileButtonAction" prefWidth="200.0" stylesheets="@MancalaStyles.css" text="Your profile">
+               <styleClass>
+                  <String fx:value="fillblue_button" />
+                  <String fx:value="mainmenu_button" />
+               </styleClass>
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="leaderboardButton" mnemonicParsing="false" onAction="#leaderboardButtonAction" prefWidth="200.0" stylesheets="@MancalaStyles.css" text="Leaderboard">
+               <styleClass>
+                  <String fx:value="fillblue_button" />
+                  <String fx:value="mainmenu_button" />
+               </styleClass>
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#gameHistoryButtonAction" prefWidth="200.0" stylesheets="@MancalaStyles.css" text="Game History">
+               <styleClass>
+                  <String fx:value="fillblue_button" />
+                  <String fx:value="mainmenu_button" />
+               </styleClass>
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#logOutButtonAction" prefWidth="200.0" styleClass="fillred_button" stylesheets="@MancalaStyles.css" text="Log out">
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </Button>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="20.0" />
+         </BorderPane.margin>
       </VBox>
    </center>
    <top>
-      <Label text="Menu" BorderPane.alignment="BOTTOM_CENTER">
+      <Label alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="49.0" prefWidth="229.0" text="Game Menu" textAlignment="CENTER" BorderPane.alignment="TOP_CENTER">
          <BorderPane.margin>
-            <Insets top="40.0" />
+            <Insets bottom="20.0" top="10.0" />
          </BorderPane.margin>
+         <font>
+            <Font name="MontserratAlternates-Medium" size="35.0" />
+         </font>
       </Label>
    </top>
 </BorderPane>
