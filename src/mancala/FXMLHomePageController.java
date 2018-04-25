@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author josephseddpm
+ * @author Neo
  */
 public class FXMLHomePageController implements Initializable {
 
@@ -34,6 +34,9 @@ public class FXMLHomePageController implements Initializable {
     
     @FXML 
     private Button startoldgameButton;
+    
+    @FXML 
+    private Button leaderboardButton;
     
     @FXML 
     public void startnewgameButtonAction(ActionEvent event) throws IOException {
@@ -54,6 +57,14 @@ public class FXMLHomePageController implements Initializable {
          app_stage.show();
     }
     
+    public void leaderboardButtonAction(ActionEvent event) throws IOException {
+         System.out.println("Opening Leaderboard");
+         Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLLeaderboard.fxml"));
+         Scene home_page_scene = new Scene(home_page_parent);
+         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+         app_stage.setScene(home_page_scene);
+         app_stage.show();
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

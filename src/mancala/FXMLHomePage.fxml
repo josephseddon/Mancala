@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mancala.FXMLHomePageController">
    <center>
@@ -14,50 +15,61 @@
          <children>
             <Button fx:id="startnewgameButton" mnemonicParsing="false" onAction="#startnewgameButtonAction" styleClass="fillblue_button" stylesheets="@MancalaStyles.css" text="New Game (New design)">
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="15.0" />
                </VBox.margin></Button>
             <Button fx:id="startoldgameButton" mnemonicParsing="false" onAction="#startoldgameButtonAction" styleClass="fillgreen_button" stylesheets="@MancalaStyles.css" text="New Game (Old design)">
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="15.0" />
                </VBox.margin>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <Button mnemonicParsing="false" stylesheets="@MancalaStyles.css" text="Your profile">
+            <Button mnemonicParsing="false" prefWidth="200.0" stylesheets="@MancalaStyles.css" text="Your profile">
                <styleClass>
                   <String fx:value="fillblue_button" />
                   <String fx:value="mainmenu_button" />
                </styleClass>
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="15.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" stylesheets="@MancalaStyles.css" text="Leaderboard">
+            <Button fx:id="leaderboardButton" mnemonicParsing="false" onAction="#leaderboardButtonAction" prefWidth="200.0" stylesheets="@MancalaStyles.css" text="Leaderboard">
                <styleClass>
                   <String fx:value="fillblue_button" />
                   <String fx:value="mainmenu_button" />
                </styleClass>
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="15.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" stylesheets="@MancalaStyles.css" text="Game History">
+            <Button mnemonicParsing="false" prefWidth="200.0" stylesheets="@MancalaStyles.css" text="Game History">
                <styleClass>
                   <String fx:value="fillblue_button" />
                   <String fx:value="mainmenu_button" />
                </styleClass>
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefWidth="200.0" styleClass="fillred_button" stylesheets="@MancalaStyles.css" text="Log out">
+               <VBox.margin>
+                  <Insets bottom="15.0" />
                </VBox.margin>
             </Button>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="20.0" />
+         </BorderPane.margin>
       </VBox>
    </center>
    <top>
-      <Label text="Menu" BorderPane.alignment="BOTTOM_CENTER">
+      <Label alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="49.0" prefWidth="229.0" text="Game Menu" textAlignment="CENTER" BorderPane.alignment="TOP_CENTER">
          <BorderPane.margin>
-            <Insets top="40.0" />
+            <Insets bottom="20.0" top="10.0" />
          </BorderPane.margin>
+         <font>
+            <Font name="MontserratAlternates-Medium" size="35.0" />
+         </font>
       </Label>
    </top>
 </BorderPane>
