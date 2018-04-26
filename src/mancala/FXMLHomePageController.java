@@ -44,9 +44,14 @@ public class FXMLHomePageController implements Initializable {
     private Button leaderboardButton;
     
     @FXML 
+    private Button logoutButton;
+    
+    
+    
+    @FXML 
     public void startnewgameButtonAction(ActionEvent event) throws IOException {
-         System.out.println("Start new game button clicked");
-         Parent home_page_parent = FXMLLoader.load(getClass().getResource("BoardView.fxml"));
+         System.out.println("2nd player login clicked");
+         Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXML2ndPlayerLogin.fxml"));
          Scene home_page_scene = new Scene(home_page_parent);
          Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          app_stage.setScene(home_page_scene);
@@ -62,8 +67,8 @@ public class FXMLHomePageController implements Initializable {
          app_stage.show();
     }
     
-    public void profileButtonAction(ActionEvent event) throws IOException {
-         System.out.println("Opening User Profile");
+    public void viewYourProfileButtonAction(ActionEvent event) throws IOException {
+         System.out.println("View your profile button clicked");
          Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLOwnUserProfile.fxml"));
          Scene home_page_scene = new Scene(home_page_parent);
          Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -91,14 +96,14 @@ public class FXMLHomePageController implements Initializable {
     public void logOutButtonAction(ActionEvent event){
     	System.out.println("log out");
     	try {
-            deleteCurrentUsers();
-            Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLLoginPage.fxml"));
-            Scene home_page_scene = new Scene(home_page_parent);
-            Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			deleteCurrentUsers();
+			Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLLoginPage.fxml"));
+        	Scene home_page_scene = new Scene(home_page_parent);
+        	Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             app_stage.setScene(home_page_scene);
             app_stage.show();
     	}catch(SQLException | IOException e) {
-            System.err.println(e.getMessage());
+    		System.err.println(e.getMessage());
     	}
     	
     }
