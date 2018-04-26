@@ -51,15 +51,17 @@ public class FXMLOwnUserProfileController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Connection c;
-        Statement stmt;
+        Statement stmt1;
+        Statement stmt2;
         try {
             c = DriverManager.getConnection("jdbc:sqlite:mancala.db");
             c.setAutoCommit(false);
             
             System.out.println("Opened database successfully");
-            stmt = c.createStatement();            
-            ResultSet rscurrent = stmt.executeQuery("SELECT * FROM CurrentUser WHERE PlayerNo= '1'");
-            ResultSet rs = stmt.executeQuery("SELECT * FROM User WHERE username =  '" + rscurrent.getString("CurrentUsers") + "'");
+            stmt1 = c.createStatement();            
+            stmt2 = c.createStatement();    
+            ResultSet rscurrent = stmt1.executeQuery("SELECT * FROM CurrentUser WHERE activeuserid= '1'");
+            ResultSet rs = stmt2.executeQuery("SELECT * FROM User WHERE username =  '" + rscurrent.getString("CurrentUsers") + "'");
             
             username.setText(rs.getString("username"));
             firstName.setText(rs.getString("firstname"));
@@ -72,7 +74,8 @@ public class FXMLOwnUserProfileController implements Initializable {
             
             rs.close();
             rscurrent.close();
-            stmt.close();
+            stmt1.close();
+            stmt2.close();
             c.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage() );

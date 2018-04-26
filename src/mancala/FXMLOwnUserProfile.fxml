@@ -130,7 +130,7 @@
               </rowConstraints>
                <children>
                   <ImageView fx:id="profilePicture" fitHeight="68.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button fx:id="pictureButton" mnemonicParsing="false" onAction="#pictureButtonClick" text="Change" GridPane.columnIndex="1" />
+                  <Button fx:id="pictureButton" mnemonicParsing="false" onAction="#pictureButtonClick" stylesheets="@MancalaStyles.css" text="Change" GridPane.columnIndex="1" />
                </children>
             </GridPane>
          </children>

@@ -37,15 +37,11 @@ import java.util.Optional;
 
 /**
  * FXML Controller class
- *
+ * A menu for changing the details of a user's profile
  * @author Aled Walters
  */
 public class FXMLEditUserProfileController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
-    
     @FXML private TextField usernameTextBox;
     @FXML private TextField firstnameTextBox;
     @FXML private TextField lastnameTextBox;
@@ -64,16 +60,13 @@ public class FXMLEditUserProfileController implements Initializable {
         try {
             c = DriverManager.getConnection("jdbc:sqlite:mancala.db");
             c.setAutoCommit(false);
-            
-            System.out.println("Opened database successfully");
             stmt = c.createStatement();            
-            ResultSet rscurrent = stmt.executeQuery("SELECT * FROM CurrentUser WHERE PlayerNo= '1'");
+            ResultSet rscurrent = stmt.executeQuery("SELECT * FROM CurrentUser WHERE activeuserid= '1'");
             currentUser = rscurrent.getString("CurrentUsers");
             ResultSet rs = stmt.executeQuery("SELECT * FROM User WHERE username =  '" + currentUser + "'");
-            
-            username = rs.getString("username");
-            firstname = rs.getString("firstname");
-            lastname = rs.getString("lname");
+            usernameTextBox.setText(rs.getString("username"));   
+            firstnameTextBox.setText(rs.getString("firstname"));
+            lastnameTextBox.setText(rs.getString("lname"));            
             rs.close();
             rscurrent.close();
             stmt.close();
@@ -82,9 +75,6 @@ public class FXMLEditUserProfileController implements Initializable {
             System.err.println(e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
-        usernameTextBox.setText(username);   
-        firstnameTextBox.setText(firstname);
-        lastnameTextBox.setText(lastname);
     }
     
     @FXML
@@ -106,92 +96,89 @@ public class FXMLEditUserProfileController implements Initializable {
     }
     @FXML
     public void saveButtonClick(ActionEvent event) throws IOException, SQLException {
+        username = usernameTextBox.getText();   
+        firstname = firstnameTextBox.getText();
+        lastname = lastnameTextBox.getText();
         System.out.println("Save button clicked");
-        /*Alert alert = new Alert(AlertType.CONFIRMATION);
+        
+        Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Save");
         alert.setHeaderText("Save any changes?");
         alert.setContentText("Are you sure you want to make these changes?");
         Optional<ButtonType> option = alert.showAndWait();
-         */   saveChanges(currentUser, username, firstname, lastname);
-            Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLOwnUserProfile.fxml"));
-            Scene home_page_scene = new Scene(home_page_parent);
-            Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            app_stage.setScene(home_page_scene);
-            app_stage.show();
-       /* if (option.get() == ButtonType.OK){
-            saveChanges(currentUser, username, firstname, lastname);
-            Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLOwnUserProfile.fxml"));
-            Scene home_page_scene = new Scene(home_page_parent);
-            Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            app_stage.setScene(home_page_scene);
-            app_stage.show();
+        if (option.get() == ButtonType.OK){
+            //if (checkValid(username)){
+                saveChanges(currentUser, username, firstname, lastname);
+                Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLOwnUserProfile.fxml"));
+                Scene home_page_scene = new Scene(home_page_parent);
+                Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.setScene(home_page_scene);
+                app_stage.show();
+            //}
         } else {
-        }*/
+        }
     }
     
     @FXML
     public void saveChanges(String currentUser, String uname, String fname, String lname) throws SQLException {
         try {
             Connection c = DriverManager.getConnection("jdbc:sqlite:mancala.db");
-            c.setAutoCommit(false);
-            
-            PreparedStatement pstmt1 = c.prepareStatement("SELECT * FROM User WHERE username= ?");
-            PreparedStatement pstmt2 = c.prepareStatement("UPDATE User SET username = ?" + ", firstname = ?" + ", lname = ?" + " WHERE username =  ?");
-            
-            pstmt1.setString(1, currentUser);
-            ResultSet rscheck = pstmt1.executeQuery();
-            pstmt2.setString(1, uname);
-            pstmt2.setString(2, fname);
-            pstmt2.setString(3, lname);
-            pstmt2.setString(4, currentUser);
-            ResultSet rsupdate = pstmt2.executeQuery();
-            pstmt2.executeUpdate();
-            
-            //rscheck.close();
-            pstmt2.close();
+            c.setAutoCommit(false);                        
+            PreparedStatement pstmt = c.prepareStatement("UPDATE User SET username = ?" + ", firstname = ?" + ", lname = ?" + " WHERE username =  ?");
+            pstmt.setString(1, uname);
+            pstmt.setString(2, fname);
+            pstmt.setString(3, lname);            
+            pstmt.setString(4, currentUser);            
+            pstmt.executeUpdate();
+            pstmt.close();
+            Statement stmt = c.createStatement();
+            stmt.executeUpdate("UPDATE CurrentUser SET CurrentUsers = '" + username + "' WHERE activeuserid = '1'");
+            stmt.close();
             c.commit();
             c.close();
-                   
-        
-        
-        
-        
-        
-       /* 
-        Statement stmt1;
-        Statement stmt2;
-        try {
-            c = DriverManager.getConnection("jdbc:sqlite:mancala.db");
-            c.setAutoCommit(false);            
-            System.out.println("Opened database successfully");
-            stmt1 = c.createStatement();     
-            stmt2 = c.createStatement();  
-            ResultSet rscheck = stmt1.executeQuery("SELECT * FROM User WHERE username= '" + uname + "'"); //Comment ouit?
-            if (rscheck.getString("username").equals(uname)){
-                Alert alert = new Alert(AlertType.ERROR);    
-                alert.setTitle("Error");
-                alert.setHeaderText("Invalid username");
-                alert.setContentText("The input username already exists."); 
-            } else if (uname.equals("")){                                               //Need to create validity checks
-                Alert alert = new Alert(AlertType.ERROR);    
-                alert.setTitle("Error");
-                alert.setHeaderText("Invalid username");
-                alert.setContentText("The input username cannot be empty.");          
-           // } else {            
-            
-            //Change to prepared statement
-            stmt2.executeUpdate("UPDATE User SET username = '" + uname + "', firstname = '" + fname + "', lname = '" + lname + "' WHERE username =  '" + currentUser + "'");
-            stmt1.close();
-            stmt2.close();
-            rscheck.close();
-            c.commit();
-            c.close();*/
-            
-        } catch (Exception e) {
+         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
+            System.out.println("SQLException");
         }
-         
     }
+    /*@FXML
+    public boolean checkValid(String uname){
+        try {            
+            Statement stmt;
+            Connection c = DriverManager.getConnection("jdbc:sqlite:mancala.db");  
+            c.setAutoCommit(false);          
+            System.out.println("Opened database successfully");
+            stmt = c.createStatement();    
+            ResultSet rscount = stmt.executeQuery("SELECT Count (*) AS 'total' FROM User WHERE username = '" + uname + "'");
+            if (rscount.getInt("total")> 0){
+                Alert alert = new Alert(AlertType.ERROR);    
+                alert.setTitle("Error");
+                alert.setHeaderText("Invalid username");
+                alert.setContentText("This username already exists."); 
+            } else if (uname.equals("")){                                           
+                Alert alert = new Alert(AlertType.ERROR);    
+                alert.setTitle("Error");
+                alert.setHeaderText("Invalid username");
+                alert.setContentText("Your username cannot be empty.");          
+            } else {
+                rscount.close();
+                stmt.close();
+                c.commit();
+                c.close();
+                return false;
+            }
+                rscount.close();
+                stmt.close();
+                c.commit();
+                c.close();
+                System.out.println("Query Passed");
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+            System.out.println("SQLException");
+        }
+        return true;         
+    }*/
 }
 

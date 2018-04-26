@@ -126,7 +126,14 @@ public class FXMLCreateUserController implements Initializable {
         System.out.println("Operation done successfully");
         return user_taken;
     }
-    
+    public void cancelButtonAction(ActionEvent event) throws IOException{
+    	System.out.println("Cancel button clicked");
+    	Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+    	Scene home_page_scene = new Scene(home_page_parent);
+    	Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        app_stage.setScene(home_page_scene);
+        app_stage.show();
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
