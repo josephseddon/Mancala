@@ -38,6 +38,8 @@ public class Move {
 	private static boolean repeatTurn = false;
 	private Label[] holeLabels;
 	private boolean vsCPU = true;
+	private int mancalaCount1 = 0;
+	private int mancalaCount2 = 0;
 	
 	@FXML Label value0;
 	@FXML Label value1;
@@ -220,16 +222,19 @@ public class Move {
 				turnLabel.setText("Player 1 wins! Congratulations!");
 				System.out.println("Player 1 wins!");
 				updateUserHistory(hasWon());
+				updateGameHistory(hasWon(), mancalaCount1, mancalaCount2);
 			}
 			if (hasWon() == 2) {
 				turnLabel.setText("Player 2 wins! Congratulations!");
 				System.out.println("Player 2 Wins!");
 				updateUserHistory(hasWon());
+				updateGameHistory(hasWon(), mancalaCount1, mancalaCount2);
 			}
 			if (hasWon() == 3) {
 				turnLabel.setText("It's a tie!");
 				System.out.println("Draw!");
 				updateUserHistory(hasWon());
+				updateGameHistory(hasWon(), mancalaCount1, mancalaCount2);
 			}
 		}
 		if (hasWon() < 0) {
@@ -388,10 +393,63 @@ public class Move {
 		        System.exit(0);
 		    }
 		    System.out.println("Operation done successfully");
+		}	
+	}
+	
+	public void updateGameHistory(int winner, int mancalaCount1, int mancalaCount2) {
+		if (winner == 1 || winner == 3) {
+			Connection c;
+		    Statement stmt;
+		        
+		    try {
+		    	c = DriverManager.getConnection("jdbc:sqlite:mancala.db");
+		        c.setAutoCommit(false);
+		        System.out.println("Opened database successfully");
+		        stmt = c.createStatement();
+		        if (vsCPU == true) {
+		        	stmt.executeUpdate("INSERT INTO gamehistory (winnerid, loserid, winnerscore, loserscore) VALUES ('" + player1ID + "' , 'CPU', '" + mancalaCount1 + "', '" + mancalaCount2 + "')"); 
+		        }
+		        else {
+		        	stmt.executeUpdate("INSERT INTO gamehistory (winnerid, loserid, winnerscore, loserscore) VALUES ('" + player1ID + "' , '" + player2ID + "', '" + mancalaCount1 + "', '" + mancalaCount2 + "')");
+		        }
+		        stmt.close();
+		        c.commit();
+		        c.close();
+		    } 
+		        
+		    catch (Exception e) {
+		    	System.err.println(e.getClass().getName() + ": " + e.getMessage() );
+		        System.exit(0);
+		    }
+		    System.out.println("Operation done successfully");
 			
 		}
-			
-		}
+		if (winner == 2) {
+			Connection c;
+		    Statement stmt; 
+		    try {
+		    	c = DriverManager.getConnection("jdbc:sqlite:mancala.db");
+		        c.setAutoCommit(false);
+		        System.out.println("Opened database successfully");
+		        stmt = c.createStatement();
+		        if (vsCPU == true) {
+		        	stmt.executeUpdate("INSERT INTO gamehistory (winnerid, loserid, winnerscore, loserscore) VALUES ('" + player2ID + "' , 'CPU', '" + mancalaCount2 + "', '" + mancalaCount1 + "')"); 
+		        }
+		        else {
+		        	stmt.executeUpdate("INSERT INTO gamehistory (winnerid, loserid, winnerscore, loserscore) VALUES ('" + player2ID + "' , '" + player1ID + "', '" + mancalaCount2 + "', '" + mancalaCount1 + "')");
+		        }
+		        stmt.close();
+		        c.commit();
+		        c.close();
+		    } 
+		        
+		    catch (Exception e) {
+		    	System.err.println(e.getClass().getName() + ": " + e.getMessage() );
+		        System.exit(0);
+		    }
+		    System.out.println("Operation done successfully");	
+		}	
+	}
 
 	/**
 	 * Checks the player who has selected is the correct player with reference to turn.
@@ -573,8 +631,6 @@ public class Move {
 	public int hasWon() {
 		int sideCount1 = 0;
 		int sideCount2 = 0;
-		int mancalaCount1 = 0;
-		int mancalaCount2 = 0;
 		for(int i = 0; i < 6 ; ++i){
 				sideCount1 = sideCount1 + boardArray[i];
 				sideCount2 = sideCount2 + boardArray[i+7];
