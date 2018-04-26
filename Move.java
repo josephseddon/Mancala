@@ -222,7 +222,7 @@ public class Move {
 				turnLabel.setText("Player 1 wins! Congratulations!");
 				System.out.println("Player 1 wins!");
 				updateUserHistory(hasWon());
-				updateGameHistory(hasWon(), mancalaCount1, mancalaCount2);
+				updateGameHistory(hasWon() , mancalaCount1, mancalaCount2);
 			}
 			if (hasWon() == 2) {
 				turnLabel.setText("Player 2 wins! Congratulations!");
@@ -433,7 +433,7 @@ public class Move {
 		        System.out.println("Opened database successfully");
 		        stmt = c.createStatement();
 		        if (vsCPU == true) {
-		        	stmt.executeUpdate("INSERT INTO gamehistory (winnerid, loserid, winnerscore, loserscore) VALUES ('" + player2ID + "' , 'CPU', '" + mancalaCount2 + "', '" + mancalaCount1 + "')"); 
+		        	stmt.executeUpdate("INSERT INTO gamehistory (winnerid, loserid, winnerscore, loserscore) VALUES ('CPU', '" + player1ID + "', '" + mancalaCount2 + "', '" + mancalaCount1 + "')"); 
 		        }
 		        else {
 		        	stmt.executeUpdate("INSERT INTO gamehistory (winnerid, loserid, winnerscore, loserscore) VALUES ('" + player2ID + "' , '" + player1ID + "', '" + mancalaCount2 + "', '" + mancalaCount1 + "')");
