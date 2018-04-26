@@ -1,5 +1,8 @@
-package application;
+package mancala;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import javafx.fxml.FXML;
@@ -7,9 +10,17 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import java.sql.Statement;
+import java.util.ResourceBundle;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import javafx.event.ActionEvent;
 
 /** 
- * This class is responsiblie for the game mechanics and is the controller class for BoardView.fxml
+ * This class is responsible for the game mechanics and is the controller class for BoardView.fxml
  * @author Jonathon Mateo
  *
  */
@@ -17,8 +28,8 @@ import javafx.scene.shape.Circle;
 
 public class Move {
 	private int[] boardArray = new int[14];
-	private int player1ID = 1;
-	private int player2ID = 2;
+	private String player1ID;
+	private String player2ID;
 	private int winner = -1;
 	private static int gameID = 0;
 	private static int player = 0;
@@ -27,6 +38,8 @@ public class Move {
 	private static boolean repeatTurn = false;
 	private Label[] holeLabels;
 	private boolean vsCPU = true;
+	private int mancalaCount1 = 0;
+	private int mancalaCount2 = 0;
 	
 	@FXML Label value0;
 	@FXML Label value1;
@@ -50,6 +63,7 @@ public class Move {
 	 */
 	
 	public void initialize() throws InterruptedException {
+		System.out.println(vsCPU);
 		for(int i = 0; i <= 13; ++i) {
 				boardArray[i] = 4;
 			}
@@ -58,12 +72,77 @@ public class Move {
 		labelArray();
 		setValues();
 		player = playerStart();
+		int loggedInUsers = getLoggedInUsers();
+		System.out.println(loggedInUsers + " " + vsCPU);
+		if (loggedInUsers == 2) {
+			vsCPU = false;
+		}
+		setPlayerID();
+		System.out.println(vsCPU);
+		System.out.println(player1ID);//loggedInUsers + player1ID + player2ID);
 		turnLabel.setText("Player " + Integer.toString(getPlayer()) + " select pit!");
 		if (vsCPU == true && player == 2) {
 			turnLabel.setText("CPU will act as Player 2. CPU's turn first: Click here for CPU to move.");
 		}
 		
 	}
+	
+	public void setPlayerID() { 
+		Connection c;
+	    Statement stmt;
+	        
+	    try {
+	    	c = DriverManager.getConnection("jdbc:sqlite:mancala.db");
+	        c.setAutoCommit(false);
+	        System.out.println("Opened database successfully");
+	        stmt = c.createStatement();
+	        ResultSet player1 = stmt.executeQuery("SELECT CurrentUsers FROM CurrentUser WHERE activeuserid = 1");
+	        while (player1.next()) {
+	        	player1ID = player1.getString("CurrentUsers");
+	        }
+	        if (vsCPU == false) {
+	        	ResultSet player2 = stmt.executeQuery("SELECT CurrentUsers FROM CurrentUser WHERE activeuserid = 2");
+	        	while (player2.next()) {
+	        	player2ID = player2.getString("CurrentUsers");
+	        	}
+	        }
+	        stmt.close();
+	        c.commit();
+	        c.close();
+	    } 
+	        
+	    catch (Exception e) {
+	    	System.err.println(e.getClass().getName() + ": " + e.getMessage() );
+	        System.exit(0);
+	    }
+	    System.out.println("Operation done successfully");
+	}
+	
+	public int getLoggedInUsers() {
+		int loggedInUsers = 1;
+		Connection c;
+	    Statement stmt;
+	    
+	    try {
+	    	c = DriverManager.getConnection("jdbc:sqlite:mancala.db");
+	        c.setAutoCommit(false);
+	        System.out.println("Opened database successfully");
+	        stmt = c.createStatement();
+	        ResultSet rs = stmt.executeQuery("SELECT Count (*) AS total FROM CurrentUser");
+	        loggedInUsers = rs.getInt("total");
+	        
+	        stmt.close();
+	        c.commit();
+	        c.close();
+	    } 
+	        
+	    catch (Exception e) {
+	    	System.err.println(e.getClass().getName() + ": " + e.getMessage() );
+	        System.exit(0);
+	    }
+	    System.out.println("Operation done successfully");
+	    return loggedInUsers;
+    }
 	
 	/**
 	 * chooses random player to start.
@@ -142,14 +221,20 @@ public class Move {
 			if (hasWon() == 1) {
 				turnLabel.setText("Player 1 wins! Congratulations!");
 				System.out.println("Player 1 wins!");
+				updateUserHistory(hasWon());
+				updateGameHistory(hasWon(), mancalaCount1, mancalaCount2);
 			}
 			if (hasWon() == 2) {
 				turnLabel.setText("Player 2 wins! Congratulations!");
 				System.out.println("Player 2 Wins!");
+				updateUserHistory(hasWon());
+				updateGameHistory(hasWon(), mancalaCount1, mancalaCount2);
 			}
 			if (hasWon() == 3) {
 				turnLabel.setText("It's a tie!");
 				System.out.println("Draw!");
+				updateUserHistory(hasWon());
+				updateGameHistory(hasWon(), mancalaCount1, mancalaCount2);
 			}
 		}
 		if (hasWon() < 0) {
@@ -172,6 +257,198 @@ public class Move {
 				}
 			}
 		}
+	}
+	
+	public void updateUserHistory(int winner) { 
+		double oneWins = 0;
+		double oneLosses = 0;
+		double oneDraws = 0;
+		double twoWins = 0;
+		double twoLosses = 0;
+		double twoDraws = 0;
+		if (winner == 1) {
+			Connection c;
+		    Statement stmt;
+		        
+		    try {
+		    	c = DriverManager.getConnection("jdbc:sqlite:mancala.db");
+		        c.setAutoCommit(false);
+		        System.out.println("Opened database successfully");
+		        stmt = c.createStatement();
+		        ResultSet rs1 =  stmt.executeQuery("SELECT wins FROM User WHERE username = '" + player1ID + "'");
+		        while (rs1.next()) {
+		        oneWins = rs1.getDouble("wins");
+		        }
+		        ++oneWins;
+		        stmt.executeUpdate("UPDATE User SET wins = '"+ oneWins + "' WHERE username = '" + player1ID + "'");
+		        ResultSet rs2 = stmt.executeQuery("SELECT losses FROM User WHERE username = '" + player1ID + "'");
+		        while  (rs2.next()) {
+		        oneLosses = rs2.getDouble("losses");
+		        }
+		        double oneRatio = oneWins / oneLosses;
+		        stmt.executeUpdate("UPDATE User SET ratio = '" + oneRatio + "' WHERE username = '" + player1ID + "'");
+		        if (vsCPU == false) {
+		        	ResultSet rs3 = stmt.executeQuery("SELECT losses FROM User WHERE username = '" + player2ID + "'");
+		        	while (rs3.next()) {
+		        		twoLosses =  rs3.getDouble("losses");
+		        	}
+		        	++twoLosses;
+		        	stmt.executeUpdate("UPDATE User SET losses = '"+ twoLosses + "' WHERE username = '" + player2ID + "'");
+		        	ResultSet rs4 = stmt.executeQuery("SELECT wins FROM User WHERE username = '" + player2ID + "'");
+		        	while (rs4.next()) {
+		        		twoWins = rs4.getDouble("wins");
+		        	}
+		        	double twoRatio = twoWins / twoLosses;
+		        	stmt.executeUpdate("UPDATE User SET ratio = '" + twoRatio + "' WHERE username = '" + player2ID + "'");
+		        }
+		        stmt.close();
+		        c.commit();
+		        c.close();
+		    } 
+		        
+		    catch (Exception e) {
+		    	System.err.println(e.getClass().getName() + ": " + e.getMessage() );
+		        System.exit(0);
+		    }
+		    System.out.println("Operation done successfully");
+	    }
+			
+		if (winner == 2) {
+			Connection c;
+		    Statement stmt;
+		        
+		    try {
+		    	c = DriverManager.getConnection("jdbc:sqlite:mancala.db");
+		        c.setAutoCommit(false);
+		        System.out.println("Opened database successfully");
+		        stmt = c.createStatement();
+		        if (vsCPU == false) {
+		        	ResultSet rs1 =  stmt.executeQuery("SELECT wins FROM User WHERE username = '" + player2ID + "'");
+		        	while (rs1.next()) {
+		        		twoWins = rs1.getDouble("wins");
+		        	}
+		        	++twoWins;
+		        	stmt.executeUpdate("UPDATE User SET wins = '"+ twoWins + "' WHERE username = '" + player2ID + "'");
+		        	ResultSet rs2 = stmt.executeQuery("SELECT losses FROM User WHERE username = '" + player2ID + "'");
+		        	while (rs2.next()) {
+		        		twoLosses = rs2.getDouble("losses");	
+		        	}
+		        	double twoRatio = twoWins / twoLosses;
+		        	stmt.executeUpdate("UPDATE User SET ratio = '" + twoRatio + "' WHERE username = '" + player2ID + "'");
+		        }
+		        ResultSet rs3 = stmt.executeQuery("SELECT losses FROM User WHERE username = '" + player1ID + "'");
+		        while (rs3.next()) {
+		        	oneLosses =  rs3.getDouble("losses");
+		        }
+		        ++oneLosses;
+		        stmt.executeUpdate("UPDATE User SET losses = '"+ oneLosses + "' WHERE username = '" + player1ID + "'");
+		        ResultSet rs4 = stmt.executeQuery("SELECT wins FROM User WHERE username = '" + player1ID + "'");
+		        while (rs4.next()) {
+		        	oneWins = rs4.getDouble("wins");
+		        }
+		        double oneRatio = oneWins / oneLosses;
+		        stmt.executeUpdate("UPDATE User SET ratio = '" + oneRatio + "' WHERE username = '" + player1ID + "'");
+		        stmt.close();
+		        c.commit();
+		        c.close();
+		    } 
+		        
+		    catch (Exception e) {
+		    	System.err.println(e.getClass().getName() + ": " + e.getMessage() );
+		        System.exit(0);
+		    }
+		    System.out.println("Operation done successfully");
+			
+		}
+		if (winner == 3) {
+			Connection c;
+		    Statement stmt;
+		        
+		    try {
+		    	c = DriverManager.getConnection("jdbc:sqlite:mancala.db");
+		        c.setAutoCommit(false);
+		        System.out.println("Opened database successfully");
+		        stmt = c.createStatement();
+		        if (vsCPU == false) {
+		        	ResultSet rs1 = stmt.executeQuery("SELECT draws FROM User WHERE username = '" + player2ID + "'");
+		        	while (rs1.next()) {
+		        		twoDraws = rs1.getDouble("draws");
+		        	}
+		        	++twoDraws;
+		        	stmt.executeUpdate("UPDATE User SET draws = '"+ twoDraws + "' WHERE username = '" + player2ID + "'");
+		        	}
+		        ResultSet rs2 = stmt.executeQuery("SELECT draws FROM User WHERE username = '" + player1ID + "'");
+		        while (rs2.next()) {
+		        	oneDraws = rs2.getDouble("draws");
+		        }
+		        ++oneDraws;
+		        stmt.executeUpdate("UPDATE User SET wins = '"+ oneDraws + "' WHERE username = '" + player1ID + "'");
+		        stmt.close();
+		        c.commit();
+		        c.close();
+		    } 
+		        
+		    catch (Exception e) {
+		    	System.err.println(e.getClass().getName() + ": " + e.getMessage() );
+		        System.exit(0);
+		    }
+		    System.out.println("Operation done successfully");
+		}	
+	}
+	
+	public void updateGameHistory(int winner, int mancalaCount1, int mancalaCount2) {
+		if (winner == 1 || winner == 3) {
+			Connection c;
+		    Statement stmt;
+		        
+		    try {
+		    	c = DriverManager.getConnection("jdbc:sqlite:mancala.db");
+		        c.setAutoCommit(false);
+		        System.out.println("Opened database successfully");
+		        stmt = c.createStatement();
+		        if (vsCPU == true) {
+		        	stmt.executeUpdate("INSERT INTO gamehistory (winnerid, loserid, winnerscore, loserscore) VALUES ('" + player1ID + "' , 'CPU', '" + mancalaCount1 + "', '" + mancalaCount2 + "')"); 
+		        }
+		        else {
+		        	stmt.executeUpdate("INSERT INTO gamehistory (winnerid, loserid, winnerscore, loserscore) VALUES ('" + player1ID + "' , '" + player2ID + "', '" + mancalaCount1 + "', '" + mancalaCount2 + "')");
+		        }
+		        stmt.close();
+		        c.commit();
+		        c.close();
+		    } 
+		        
+		    catch (Exception e) {
+		    	System.err.println(e.getClass().getName() + ": " + e.getMessage() );
+		        System.exit(0);
+		    }
+		    System.out.println("Operation done successfully");
+			
+		}
+		if (winner == 2) {
+			Connection c;
+		    Statement stmt; 
+		    try {
+		    	c = DriverManager.getConnection("jdbc:sqlite:mancala.db");
+		        c.setAutoCommit(false);
+		        System.out.println("Opened database successfully");
+		        stmt = c.createStatement();
+		        if (vsCPU == true) {
+		        	stmt.executeUpdate("INSERT INTO gamehistory (winnerid, loserid, winnerscore, loserscore) VALUES ('" + player2ID + "' , 'CPU', '" + mancalaCount2 + "', '" + mancalaCount1 + "')"); 
+		        }
+		        else {
+		        	stmt.executeUpdate("INSERT INTO gamehistory (winnerid, loserid, winnerscore, loserscore) VALUES ('" + player2ID + "' , '" + player1ID + "', '" + mancalaCount2 + "', '" + mancalaCount1 + "')");
+		        }
+		        stmt.close();
+		        c.commit();
+		        c.close();
+		    } 
+		        
+		    catch (Exception e) {
+		    	System.err.println(e.getClass().getName() + ": " + e.getMessage() );
+		        System.exit(0);
+		    }
+		    System.out.println("Operation done successfully");	
+		}	
 	}
 
 	/**
@@ -354,8 +631,6 @@ public class Move {
 	public int hasWon() {
 		int sideCount1 = 0;
 		int sideCount2 = 0;
-		int mancalaCount1 = 0;
-		int mancalaCount2 = 0;
 		for(int i = 0; i < 6 ; ++i){
 				sideCount1 = sideCount1 + boardArray[i];
 				sideCount2 = sideCount2 + boardArray[i+7];
