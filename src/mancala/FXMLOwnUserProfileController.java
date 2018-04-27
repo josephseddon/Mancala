@@ -47,6 +47,7 @@ public class FXMLOwnUserProfileController implements Initializable {
     
     /**
      * Initializes the controller class.
+     * Sets user data to labels and imageview
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -82,7 +83,10 @@ public class FXMLOwnUserProfileController implements Initializable {
             System.exit(0);
         }     
     
-}
+    }
+    /**
+     * Returns user to homepage
+     */
     @FXML
     public void backButtonClick(ActionEvent event) throws IOException {
          System.out.println("BacktoMenu button clicked");
@@ -93,6 +97,9 @@ public class FXMLOwnUserProfileController implements Initializable {
          app_stage.show();
     }    
     
+    /**
+     * Takes user to edit profile page
+     */
     @FXML
     public void editButtonClick(ActionEvent event) throws IOException {
          System.out.println("Edit Profile button clicked");
@@ -102,6 +109,10 @@ public class FXMLOwnUserProfileController implements Initializable {
          app_stage.setScene(home_page_scene);
          app_stage.show();
     }   
+    
+    /**
+     * Takes user to picture select page
+     */
     @FXML
     public void pictureButtonClick(ActionEvent event) throws IOException {
          System.out.println("ChangePicture button clicked");

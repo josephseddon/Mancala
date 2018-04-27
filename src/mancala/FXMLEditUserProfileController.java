@@ -5,7 +5,6 @@
  */
 package mancala;
 
-import java.io.File;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException; 
@@ -27,7 +26,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.stage.Stage;
-import javafx.scene.image.*;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Alert;
@@ -53,6 +51,10 @@ public class FXMLEditUserProfileController implements Initializable {
     private String firstname;
     private String lastname;
     
+        /**
+         * Initializes the controller class.
+         * On initialisation sets the users details to the text boxes
+         */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Connection c;
@@ -77,6 +79,9 @@ public class FXMLEditUserProfileController implements Initializable {
         }
     }
     
+        /**
+         * Cancels changes and returns to Profile page
+         */
     @FXML
     public void cancelButtonClick(ActionEvent event) throws IOException {
         System.out.println("Back button clicked");
@@ -94,6 +99,10 @@ public class FXMLEditUserProfileController implements Initializable {
         } else {
         }
     }
+        /**
+         * If changes are valid saves to database
+         * otherwise gives an error message
+         */
     @FXML
     public void saveButtonClick(ActionEvent event) throws IOException, SQLException {
         username = usernameTextBox.getText();   
@@ -101,24 +110,45 @@ public class FXMLEditUserProfileController implements Initializable {
         lastname = lastnameTextBox.getText();
         System.out.println("Save button clicked");
         
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Save");
-        alert.setHeaderText("Save any changes?");
-        alert.setContentText("Are you sure you want to make these changes?");
-        Optional<ButtonType> option = alert.showAndWait();
-        if (option.get() == ButtonType.OK){
-            //if (checkValid(username)){
+        if (checkValid(username).equals("valid")){
+            Alert alertSave = new Alert(AlertType.CONFIRMATION);
+            alertSave.setTitle("Save");
+            alertSave.setHeaderText("Save any changes?");
+            alertSave.setContentText("Are you sure you want to make these changes?");
+            Optional<ButtonType> optionSave = alertSave.showAndWait();
+            if (optionSave.get() == ButtonType.OK){
                 saveChanges(currentUser, username, firstname, lastname);
                 Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLOwnUserProfile.fxml"));
                 Scene home_page_scene = new Scene(home_page_parent);
                 Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 app_stage.setScene(home_page_scene);
                 app_stage.show();
-            //}
-        } else {
+            } else{
+            }
+        } else { 
+                if (checkValid(username).equals("taken")){
+                Alert alertTaken = new Alert(AlertType.ERROR);    
+                alertTaken.setTitle("Error");
+                alertTaken.setHeaderText("Invalid username");
+                alertTaken.setContentText("This username already exists."); 
+                alertTaken.showAndWait();
+            } else if (checkValid(username).equals("null")){   
+                Alert alertNull = new Alert(AlertType.ERROR);    
+                alertNull.setTitle("Error");
+                alertNull.setHeaderText("Invalid username");
+                alertNull.setContentText("Your username cannot be empty.");
+                alertNull.showAndWait(); 
+            }  
         }
     }
     
+        /**
+         * Saves changes to database
+         * @param currentUser the current users username
+         * @param uname the current users new username
+         * @param fname the current users new first name
+         * @param lname the current users new last name
+         */
     @FXML
     public void saveChanges(String currentUser, String uname, String fname, String lname) throws SQLException {
         try {
@@ -142,8 +172,13 @@ public class FXMLEditUserProfileController implements Initializable {
             System.out.println("SQLException");
         }
     }
-    /*@FXML
-    public boolean checkValid(String uname){
+    /**
+      * Checks for unique, non-null usernames
+      * @ return gives 'valid', 'taken', or 'null' depending on input
+    */
+    @FXML
+    public String checkValid(String uname){
+        
         try {            
             Statement stmt;
             Connection c = DriverManager.getConnection("jdbc:sqlite:mancala.db");  
@@ -151,34 +186,30 @@ public class FXMLEditUserProfileController implements Initializable {
             System.out.println("Opened database successfully");
             stmt = c.createStatement();    
             ResultSet rscount = stmt.executeQuery("SELECT Count (*) AS 'total' FROM User WHERE username = '" + uname + "'");
-            if (rscount.getInt("total")> 0){
-                Alert alert = new Alert(AlertType.ERROR);    
-                alert.setTitle("Error");
-                alert.setHeaderText("Invalid username");
-                alert.setContentText("This username already exists."); 
-            } else if (uname.equals("")){                                           
-                Alert alert = new Alert(AlertType.ERROR);    
-                alert.setTitle("Error");
-                alert.setHeaderText("Invalid username");
-                alert.setContentText("Your username cannot be empty.");          
-            } else {
+            if (((uname.equals(currentUser)) && (rscount.getInt("total")> 1)) || ((!uname.equals(currentUser)) && (rscount.getInt("total")> 0))){
                 rscount.close();
                 stmt.close();
                 c.commit();
                 c.close();
-                return false;
+                return "taken";
+            } else if (uname.equals("")){   
+                rscount.close();
+                stmt.close();
+                c.commit();
+                c.close();         
+                return "null";      
             }
-                rscount.close();
-                stmt.close();
-                c.commit();
-                c.close();
-                System.out.println("Query Passed");
+            rscount.close();
+            stmt.close();
+            c.commit();
+            c.close();
+            System.out.println("Query Passed");
         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
             System.out.println("SQLException");
         }
-        return true;         
-    }*/
+        return "valid";         
+    }
 }
 

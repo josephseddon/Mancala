@@ -41,8 +41,19 @@ public class FXMLPictureSelectionController implements Initializable {
     @FXML ImageView pic5Image;
     @FXML ImageView pic6Image;
     static boolean create = false;
-    static String username;
+    static String username;        
     
+    /**
+     * Initializes the controller class.
+     * Sets user data to labels and imageview
+     */
+    public void initialize(URL url, ResourceBundle rb) {    
+    }    
+    
+        /**
+         * Takes user to Profile page or created profile page depending on 
+         * state of create
+         */
     @FXML
     public void cancelButtonAction(ActionEvent event) throws IOException {
         System.out.println("Cancel clicked");
@@ -54,10 +65,12 @@ public class FXMLPictureSelectionController implements Initializable {
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.setScene(home_page_scene);
         app_stage.show();
-    }
-        
-    public void initialize(URL url, ResourceBundle rb) {    
     }    
+    
+        /**
+         * Saves image choice to the users profile in the database
+         * @param num the number of the chosen image
+         */
     @FXML
     public static void setImage(String num){
         Connection c;
@@ -90,6 +103,11 @@ public class FXMLPictureSelectionController implements Initializable {
         
     }
     
+        /**
+         * Saves image 1 as the users profile picture
+         * Takes user to Profile page or created profile page depending on 
+         * state of create
+         */
     @FXML protected void pic1Clicked (MouseEvent event) throws IOException {
         System.out.println("Image 1 Selected");
         setImage("1");
@@ -102,6 +120,11 @@ public class FXMLPictureSelectionController implements Initializable {
         app_stage.setScene(home_page_scene);
         app_stage.show();
     }
+        /**
+         * Saves image 2 as the users profile picture
+         * Takes user to Profile page or created profile page depending on 
+         * state of create
+         */
     @FXML protected void pic2Clicked (MouseEvent event) throws IOException {
         System.out.println("Image 2 Selected");
         setImage("2");
@@ -114,6 +137,11 @@ public class FXMLPictureSelectionController implements Initializable {
         app_stage.setScene(home_page_scene);
         app_stage.show();
     }
+        /**
+         * Saves image 3 as the users profile picture
+         * Takes user to Profile page or created profile page depending on 
+         * state of create
+         */
     @FXML protected void pic3Clicked (MouseEvent event) throws IOException {
         System.out.println("Image 3 Selected");
         setImage("3");
@@ -126,6 +154,11 @@ public class FXMLPictureSelectionController implements Initializable {
         app_stage.setScene(home_page_scene);
         app_stage.show();
     }
+        /**
+         * Saves image 4 as the users profile picture
+         * Takes user to Profile page or created profile page depending on 
+         * state of create
+         */
     @FXML protected void pic4Clicked (MouseEvent event) throws IOException {
         System.out.println("Image 4 Selected");
         setImage("4");
@@ -138,6 +171,11 @@ public class FXMLPictureSelectionController implements Initializable {
         app_stage.setScene(home_page_scene);
         app_stage.show();
     }
+        /**
+         * Saves image 5 as the users profile picture
+         * Takes user to Profile page or created profile page depending on 
+         * state of create
+         */
     @FXML protected void pic5Clicked (MouseEvent event) throws IOException {
         System.out.println("Image 5 Selected");
         setImage("5");
@@ -150,6 +188,11 @@ public class FXMLPictureSelectionController implements Initializable {
         app_stage.setScene(home_page_scene);
         app_stage.show();
     }
+        /**
+         * Saves image 6 as the users profile picture
+         * Takes user to Profile page or created profile page depending on 
+         * state of create
+         */
     @FXML protected void pic6Clicked (MouseEvent event) throws IOException {
         System.out.println("Image 6 Selected");
         setImage("6");
