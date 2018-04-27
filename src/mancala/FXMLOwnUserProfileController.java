@@ -39,7 +39,7 @@ public class FXMLOwnUserProfileController implements Initializable {
     @FXML
     private Button pictureButton;
     @FXML
-    private Button favourites;
+    private Button favouritesButton;
     @FXML
     private Label username;
     @FXML
@@ -99,9 +99,10 @@ public class FXMLOwnUserProfileController implements Initializable {
          app_stage.show();
     }   
     
+    @FXML
     public void favouritesButtonClick(ActionEvent event) throws IOException {
-         System.out.println("BacktoMenu button clicked");
-         Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLFavouriteUser.fxml"));
+         System.out.println("Favourite button clicked");
+         Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLFavoriteUser.fxml"));
          Scene home_page_scene = new Scene(home_page_parent);
          Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          app_stage.setScene(home_page_scene);
