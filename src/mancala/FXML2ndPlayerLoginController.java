@@ -41,7 +41,7 @@ public class FXML2ndPlayerLoginController implements Initializable {
     public void secondplayerloginButtonAction(ActionEvent event) throws IOException {
          System.out.println("Login button clicked");
          if(new FXMLLeaderboard2Controller().getCurrentUsername().equals(username_box.getText())) {
-        	 usererror_Label.setText("Sorry,this user already logined in,try another one please");
+        	 usererror_Label.setText("Sorry,this user already logged in,try another one please");
         	 return;
          }
 	     if (login())
