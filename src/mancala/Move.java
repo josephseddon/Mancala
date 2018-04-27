@@ -60,8 +60,8 @@ public class Move {
 	@FXML Label turnLabel;
 	
 	/**
-	 * initialise the game, setting pit values and correct label text.
-	 * @throws InterruptedException
+	 * Initialise the game, setting pit values and correct label text.
+	 * @throwsInterruptedException
 	 */
 	
 	public void initialize() throws InterruptedException {
@@ -89,7 +89,11 @@ public class Move {
 		
 	}
 	
-	public void setPlayerID() { 
+	/**
+	 * Links player 1 and 2 in game to current logged in users.
+	 */
+	
+	private void setPlayerID() { 
 		Connection c;
 	    Statement stmt;
 	        
@@ -120,7 +124,11 @@ public class Move {
 	    System.out.println("Operation done successfully");
 	}
 	
-	public int getLoggedInUsers() {
+	/**
+	 * Gets number of current logged in users
+	 * @return integer corresponding to number of logged in users
+	 */
+	private int getLoggedInUsers() {
 		int loggedInUsers = 1;
 		Connection c;
 	    Statement stmt;
@@ -150,7 +158,7 @@ public class Move {
 	 * chooses random player to start.
 	 * @return random player number.
 	 */
-	public int playerStart() { 
+	private int playerStart() { 
 		    Random random = new Random();
 		    boolean isOne = random.nextBoolean();
 		    if (isOne) {
@@ -167,7 +175,7 @@ public class Move {
 	 * Get the current active player.
 	 * @return the current active player number.
 	 */
-	public int getPlayer() {
+	private int getPlayer() {
 		return player;
 	}
 	
@@ -175,7 +183,7 @@ public class Move {
 	 * Set the new active player.
 	 * @param a the new active player number.
 	 */
-	public void setPlayer(int a) {
+	private void setPlayer(int a) {
 		player = a;
 	}
 
@@ -183,7 +191,7 @@ public class Move {
 	 * Get the current waiting player.
 	 * @return the current waiting player number.
 	 */
-	public int getWaitingPlayer() {
+	private int getWaitingPlayer() {
 		return waitingPlayer;
 	}
 	
@@ -191,7 +199,7 @@ public class Move {
 	 * Set the new waiting player.
 	 * @param a the new waiting player.
 	 */
-	public static void setWaitingPlayer(int a) {
+	private static void setWaitingPlayer(int a) {
 		waitingPlayer = a;
 	}
 
@@ -200,14 +208,14 @@ public class Move {
 	 * Get the number of turns that have been made.
 	 * @return the number of turns that have been made.
 	 */
-	public int getPlayerTurn() {
+	private int getPlayerTurn() {
 		return playerTurn;
 	}
 	
 	/**
 	 * Increment the player turn value.
 	 */
-	public void incrPlayerTurn() {
+	private void incrPlayerTurn() {
 		++playerTurn;
 	}
 
@@ -217,7 +225,7 @@ public class Move {
 	 * @param indx
 	 * @throws InterruptedException
 	 */
-	public void move(int[] boardArray, int indx) throws InterruptedException {
+	private void move(int[] boardArray, int indx) throws InterruptedException {
 		int t = 0;
 		if (hasWon() > 0){
 			if (hasWon() == 1) {
@@ -264,7 +272,7 @@ public class Move {
 	 * Updates user history.
 	 * @param winner
 	 */
-	public void updateUserHistory(int winner) { 
+	private void updateUserHistory(int winner) { 
 		double oneWins = 0;
 		double oneLosses = 0;
 		double oneDraws = 0;
@@ -410,7 +418,7 @@ public class Move {
 	 * @param mancalaCount1
 	 * @param mancalaCount2
 	 */
-	public void updateGameHistory(int winner, int mancalaCount1, int mancalaCount2) {
+	private void updateGameHistory(int winner, int mancalaCount1, int mancalaCount2) {
 		if(updateGameDone == false) {
 		if (winner == 1 || winner == 3) {
 			Connection c;
@@ -474,7 +482,7 @@ public class Move {
 	 * @param playerTurn
 	 * @return boolean
 	 */
-	public boolean checkTurn(int player, int playerTurn) {
+	private boolean checkTurn(int player, int playerTurn) {
 		if (playerTurn % 2 == 0 && player == 1) {
 			return false;
 		}
@@ -491,7 +499,7 @@ public class Move {
 	 * @param indx
 	 * @return boolean
 	 */
-	public boolean checkSelection (int[] boardArray, int player, int indx) {
+	private boolean checkSelection (int[] boardArray, int player, int indx) {
 		if (player == 1 && indx > 6 || player == 2 && indx < 7){
 			return false;
 		}
@@ -510,7 +518,7 @@ public class Move {
 	 * @param indx
 	 * @return boardArray after redistribution
 	 */
-	public int[] redistributeStones ( int[] boardArray, int indx) {
+	private int[] redistributeStones ( int[] boardArray, int indx) {
 			int	hold =  getStoneCount(indx);
 			boardArray[indx] = 0;
 			int lasthole = 0;
@@ -557,22 +565,15 @@ public class Move {
 			return boardArray;
 	}
 	
-	public void main(String args[]) {
-	}
-	
-	/**
-	 * Get the current gameID.
-	 * @return the current GameID.
-	 */
-	public int getGameID() {
-		return gameID;
+	private void main(String args[]) {
 	}
 
 	/**
 	 * Get the current state of the Board Array.
 	 * @return Board Array.
 	 */
-	public int[] getBoardArray() {
+	
+	private int[] getBoardArray() {
 		return boardArray;
 	}
 
@@ -581,7 +582,7 @@ public class Move {
 	 * @param postMove
 	 * @return the Board Array post move.
 	 */
-	public int[] setBoardArray(int[] postMove) {
+	private int[] setBoardArray(int[] postMove) {
 		boardArray = postMove;
 		return boardArray;
 	}
@@ -591,7 +592,7 @@ public class Move {
 	 * @param indx number of the pit.
 	 * @return the number of stones in the corresponding pit.
 	 */
-	public int getStoneCount(int indx) {
+	private int getStoneCount(int indx) {
 		int stoneCount = boardArray[indx];
 		return stoneCount;
 	}
@@ -602,7 +603,7 @@ public class Move {
 	 * @param current player
 	 * @return boolean true if selection is opponent's mancala store.
 	 */
-	public boolean isOppMancalaStore(int indx, int player) {
+	private boolean isOppMancalaStore(int indx, int player) {
 		if ((indx == 6 && player == 2)||(indx == 13 && player == 1)) {
 			return true;
 		}
@@ -617,7 +618,7 @@ public class Move {
 	 * @param current player
 	 * @return boolean true if selection is own mancala store.
 	 */
-	public boolean isOwnMancalaStore(int indx, int player) {
+	private boolean isOwnMancalaStore(int indx, int player) {
 		if ((indx == 6 && player == 1)||(indx == 13 && player == 2)) {
 			return true;
 		}
@@ -631,7 +632,7 @@ public class Move {
 	 * @param indx of selected pit.
 	 * @return player number of player whose side it is on.
 	 */
-	public int getPlayerAssignment(int indx) {
+	private int getPlayerAssignment(int indx) {
 		if (indx <= 6){
 			return 1;
 		}
@@ -645,7 +646,7 @@ public class Move {
 	 * Checks win condition.
 	 * @return integer corresponding to player who has won. Or 3 for a draw, -1 for not over.
 	 */
-	public int hasWon() {
+	private int hasWon() {
 		int sideCount1 = 0;
 		int sideCount2 = 0;
 		for(int i = 0; i < 6 ; ++i){
@@ -685,7 +686,7 @@ public class Move {
 	 * Determines pit selection of CPU player.
 	 * @throws InterruptedException
 	 */
-	public void cpuSelection() throws InterruptedException {
+	private void cpuSelection() throws InterruptedException {
 		int selection = 0;
 		if (vsCPU == true && getPlayer() == 2) {
 			for (int i = 0; i < 14; ++i) { 
