@@ -40,6 +40,8 @@ public class Move {
 	private boolean vsCPU = true;
 	private int mancalaCount1 = 0;
 	private int mancalaCount2 = 0;
+	private boolean updateGameDone = false;
+	private boolean updateUserDone = false;
 	
 	@FXML Label value0;
 	@FXML Label value1;
@@ -258,7 +260,10 @@ public class Move {
 			}
 		}
 	}
-	
+	/**
+	 * Updates user history.
+	 * @param winner
+	 */
 	public void updateUserHistory(int winner) { 
 		double oneWins = 0;
 		double oneLosses = 0;
@@ -266,7 +271,7 @@ public class Move {
 		double twoWins = 0;
 		double twoLosses = 0;
 		double twoDraws = 0;
-		if (winner == 1) {
+		if (winner == 1 && updateUserDone == false) {
 			Connection c;
 		    Statement stmt;
 		        
@@ -304,6 +309,7 @@ public class Move {
 		        stmt.close();
 		        c.commit();
 		        c.close();
+		        updateUserDone = true;
 		    } 
 		        
 		    catch (Exception e) {
@@ -313,7 +319,7 @@ public class Move {
 		    System.out.println("Operation done successfully");
 	    }
 			
-		if (winner == 2) {
+		if (winner == 2 && updateUserDone == false) {
 			Connection c;
 		    Statement stmt;
 		        
@@ -351,6 +357,7 @@ public class Move {
 		        stmt.close();
 		        c.commit();
 		        c.close();
+		        updateUserDone = true;
 		    } 
 		        
 		    catch (Exception e) {
@@ -360,7 +367,7 @@ public class Move {
 		    System.out.println("Operation done successfully");
 			
 		}
-		if (winner == 3) {
+		if (winner == 3 && updateUserDone == false) {
 			Connection c;
 		    Statement stmt;
 		        
@@ -386,6 +393,7 @@ public class Move {
 		        stmt.close();
 		        c.commit();
 		        c.close();
+		        updateUserDone = true;
 		    } 
 		        
 		    catch (Exception e) {
@@ -396,11 +404,17 @@ public class Move {
 		}	
 	}
 	
+	/**
+	 * Updates game history.
+	 * @param winner
+	 * @param mancalaCount1
+	 * @param mancalaCount2
+	 */
 	public void updateGameHistory(int winner, int mancalaCount1, int mancalaCount2) {
+		if(updateGameDone == false) {
 		if (winner == 1 || winner == 3) {
 			Connection c;
-		    Statement stmt;
-		        
+		    Statement stmt;   
 		    try {
 		    	c = DriverManager.getConnection("jdbc:sqlite:mancala.db");
 		        c.setAutoCommit(false);
@@ -415,6 +429,7 @@ public class Move {
 		        stmt.close();
 		        c.commit();
 		        c.close();
+		        updateGameDone = true;
 		    } 
 		        
 		    catch (Exception e) {
@@ -441,6 +456,7 @@ public class Move {
 		        stmt.close();
 		        c.commit();
 		        c.close();
+		        updateGameDone = true;
 		    } 
 		        
 		    catch (Exception e) {
@@ -448,14 +464,15 @@ public class Move {
 		        System.exit(0);
 		    }
 		    System.out.println("Operation done successfully");	
-		}	
+		}
+		}
 	}
 
 	/**
 	 * Checks the player who has selected is the correct player with reference to turn.
 	 * @param player
 	 * @param playerTurn
-	 * @return
+	 * @return boolean
 	 */
 	public boolean checkTurn(int player, int playerTurn) {
 		if (playerTurn % 2 == 0 && player == 1) {
@@ -472,7 +489,7 @@ public class Move {
 	 * @param boardArray
 	 * @param player
 	 * @param indx
-	 * @return
+	 * @return boolean
 	 */
 	public boolean checkSelection (int[] boardArray, int player, int indx) {
 		if (player == 1 && indx > 6 || player == 2 && indx < 7){
@@ -491,7 +508,7 @@ public class Move {
 	 * Redistributes the stones based on pit selection, increments player turn when end turn condition met.
 	 * @param boardArray
 	 * @param indx
-	 * @return
+	 * @return boardArray after redistribution
 	 */
 	public int[] redistributeStones ( int[] boardArray, int indx) {
 			int	hold =  getStoneCount(indx);
