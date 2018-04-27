@@ -73,7 +73,7 @@ public class FXMLEditUserProfileController implements Initializable {
             rscurrent.close();
             stmt.close();
             c.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
@@ -148,6 +148,7 @@ public class FXMLEditUserProfileController implements Initializable {
          * @param uname the current users new username
          * @param fname the current users new first name
          * @param lname the current users new last name
+         * @throws SQLException
          */
     @FXML
     public void saveChanges(String currentUser, String uname, String fname, String lname) throws SQLException {
@@ -173,8 +174,8 @@ public class FXMLEditUserProfileController implements Initializable {
         }
     }
     /**
-      * Checks for unique, non-null usernames
-      * @ return gives 'valid', 'taken', or 'null' depending on input
+     * Checks for unique, non-null usernames
+     * @return gives 'valid', 'taken', or 'null' depending on input
     */
     @FXML
     public String checkValid(String uname){

@@ -7,6 +7,7 @@ package mancala;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -80,7 +81,7 @@ public class FXMLOwnUserProfileController implements Initializable {
             stmt1.close();
             stmt2.close();
             c.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }     
