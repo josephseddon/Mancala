@@ -128,6 +128,8 @@ public class FXMLOwnUserProfileController implements Initializable {
     @FXML
     public void pictureButtonClick(ActionEvent event) throws IOException {
          System.out.println("ChangePicture button clicked");
+         FXMLPictureSelectionController.create = false;
+         FXMLPictureSelectionController.username = username.getText();
          Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLPictureSelection.fxml"));
          Scene home_page_scene = new Scene(home_page_parent);
          Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

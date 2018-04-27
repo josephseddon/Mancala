@@ -64,6 +64,7 @@ public class FXMLCreateUserController implements Initializable {
            else
            {
                createuser();
+               FXMLPictureSelectionController.username = createuser_username_box.getText();
                app_stage.setScene(home_page_scene);
                app_stage.show();
            }
