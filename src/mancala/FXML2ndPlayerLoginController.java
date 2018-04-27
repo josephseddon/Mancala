@@ -40,23 +40,19 @@ public class FXML2ndPlayerLoginController implements Initializable {
     @FXML
     public void secondplayerloginButtonAction(ActionEvent event) throws IOException {
          System.out.println("Login button clicked");
-         if(new FXMLLeaderboard2Controller().getCurrentUsername().equals(username_box.getText())) {
-        	 usererror_Label.setText("Sorry,this user already logged in,try another one please");
-        	 return;
-         }
-	     if (login())
-	     {
-	          setCurrentUser();
-	          Parent home_page_parent = FXMLLoader.load(getClass().getResource("BoardView.fxml"));
-	          Scene home_page_scene = new Scene(home_page_parent);
-	          Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-	          app_stage.setScene(home_page_scene);
-	          app_stage.show();
-	      }
-	      else
-	      {
-	           usererror_Label.setText("Sorry, user does not exist. Try again or play as guest");
-	      }
+          if (login())
+             {
+                setCurrentUser();
+                Parent home_page_parent = FXMLLoader.load(getClass().getResource("BoardView.fxml"));
+                Scene home_page_scene = new Scene(home_page_parent);
+                Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.setScene(home_page_scene);
+                app_stage.show();
+             }
+            else
+            {
+                usererror_Label.setText("Sorry, user does not exist. Try again or play as guest");
+            }
     }
     
     private boolean login()
@@ -118,6 +114,52 @@ public class FXML2ndPlayerLoginController implements Initializable {
         System.out.println("Operation done successfully");
     }
     
+    public void computergameButtonClick(ActionEvent event) throws IOException {
+         System.out.println("Computer player button clicked");
+         Parent home_page_parent = FXMLLoader.load(getClass().getResource("BoardView.fxml"));
+         Scene home_page_scene = new Scene(home_page_parent);
+         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+         app_stage.setScene(home_page_scene);
+         app_stage.show();
+    }   
+    
+    public void guestlogin()
+    {
+        System.out.println("Guest player button clicked");
+        System.out.println("INSERT INTO CurrentUser (activeuserid, CurrentUsers) VALUES ( 2 ,CurrentUsers) VALUES ('Guest')");
+      
+        Connection c;
+        Statement stmt;
+        
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:mancala.db");
+            c.setAutoCommit(false);
+            System.out.println("Opened database successfully");
+            stmt = c.createStatement();
+            stmt.executeUpdate("INSERT INTO CurrentUser (activeuserid, CurrentUsers) VALUES ( 2 ,'Guest')");
+            stmt.close();
+            c.commit();
+            c.close();
+        } 
+        
+        catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        System.out.println("Operation done successfully");
+        
+        
+    }
+    
+    public void guestplayerButtonClick(ActionEvent event) throws IOException {
+         guestlogin();
+         System.out.println("Computer player button clicked");
+         Parent home_page_parent = FXMLLoader.load(getClass().getResource("BoardView.fxml"));
+         Scene home_page_scene = new Scene(home_page_parent);
+         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+         app_stage.setScene(home_page_scene);
+         app_stage.show();
+    } 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {

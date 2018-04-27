@@ -38,9 +38,6 @@ public class FXMLHomePageController implements Initializable {
     private Button startnewgameButton;
     
     @FXML 
-    private Button startoldgameButton;
-    
-    @FXML 
     private Button leaderboardButton;
     
     @FXML 
@@ -52,7 +49,7 @@ public class FXMLHomePageController implements Initializable {
     
     @FXML 
     public void startnewgameButtonAction(ActionEvent event) throws IOException {
-         System.out.println("2nd player login clicked");
+         System.out.println("New game clicked");
          Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXML2ndPlayerLogin.fxml"));
          Scene home_page_scene = new Scene(home_page_parent);
          Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

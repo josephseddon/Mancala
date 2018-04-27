@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.InnerShadow?>
@@ -18,10 +19,11 @@
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <GridPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #c19b6c; -fx-background-radius: 20;" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <GridPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #c19b6c; -fx-background-radius: 20;" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
@@ -32,14 +34,16 @@
                   <GridPane maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <columnConstraints>
                         <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="98.0" />
-                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="401.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="401.0" />
                         <ColumnConstraints hgrow="ALWAYS" minWidth="9.0" prefWidth="100.0" />
                      </columnConstraints>
                      <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="185.19998779296876" minHeight="10.0" prefHeight="25.199985885620123" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="389.40000915527344" minHeight="10.0" prefHeight="361.40000915527344" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="375.60001411437986" minHeight="0.5999908447265625" prefHeight="28.599990844726562" vgrow="ALWAYS" />
                      </rowConstraints>
                      <children>
-                        <GridPane alignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+                        <GridPane alignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                            <columnConstraints>
                               <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -181,27 +185,27 @@
                               </Rectangle>
                            </children>
                         </GridPane>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a57a45" height="320.0" onMouseClicked="#clickedOn13" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 50px; -fx-arc-width: 50px;" width="81.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a57a45" height="320.0" onMouseClicked="#clickedOn13" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 50px; -fx-arc-width: 50px;" width="81.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
                         </Rectangle>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a57a45" height="317.0" onMouseClicked="#clickedOn6" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 50px; -fx-arc-width: 50px;" width="88.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a57a45" height="317.0" onMouseClicked="#clickedOn6" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 50px; -fx-arc-width: 50px;" width="88.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
                         </Rectangle>
-                        <Label fx:id="value13" onMouseClicked="#clickedOn13" text="0" textFill="#f8f4f4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Label fx:id="value13" onMouseClicked="#clickedOn13" text="0" textFill="#f8f4f4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <font>
                               <Font size="39.0" />
                            </font>
                         </Label>
-                        <Label fx:id="value6" onMouseClicked="#clickedOn6" text="0" textFill="#f8f4f4" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Label fx:id="value6" onMouseClicked="#clickedOn6" text="0" textFill="#f8f4f4" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <font>
                               <Font size="39.0" />
                            </font>
                         </Label>
-                        <Label text="Score" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Label text="Score" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <GridPane.margin>
                               <Insets bottom="60.0" />
                            </GridPane.margin>
@@ -209,7 +213,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label text="Player 1" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Label text="Player 2" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <GridPane.margin>
                               <Insets bottom="90.0" />
                            </GridPane.margin>
@@ -217,7 +221,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label text="Score" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Label text="Score" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <GridPane.margin>
                               <Insets bottom="60.0" />
                            </GridPane.margin>
@@ -225,10 +229,20 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label text="Player 2" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Label text="Player 1" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <GridPane.margin>
                               <Insets bottom="90.0" />
                            </GridPane.margin>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Player 2 Holes" textFill="WHITE" GridPane.columnIndex="1">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Player 1 Holes" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -244,6 +258,30 @@
                </effect>
                <GridPane.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </GridPane.margin>
+            </GridPane>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#restartgameButtonAction" styleClass="fillgreen_button" stylesheets="@../../../Mancala-master/src/mancala/MancalaStyles.css" text="New Game">
+                     <GridPane.margin>
+                        <Insets bottom="20.0" top="20.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#returntomenuButtonAction" styleClass="fillblue_button" stylesheets="@../../../Mancala-master/src/mancala/MancalaStyles.css" text="Main Menu" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets bottom="20.0" top="20.0" />
+                     </GridPane.margin>
+                  </Button>
+               </children>
+               <GridPane.margin>
+                  <Insets bottom="10.0" top="10.0" />
                </GridPane.margin>
             </GridPane>
          </children>
