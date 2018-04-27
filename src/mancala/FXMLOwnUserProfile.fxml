@@ -1,37 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mancala.FXMLOwnUserProfileController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mancala.FXMLOwnUserProfileController">
    <bottom>
       <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
         <columnConstraints>
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonClick" styleClass="fillblue_button" stylesheets="@MancalaStyles.css" text="Back to menu" GridPane.columnIndex="1">
-               <GridPane.margin>
-                  <Insets bottom="30.0" />
-               </GridPane.margin>
-            </Button>
-            <Button fx:id="editButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#editButtonClick" styleClass="fillgreen_button" stylesheets="@MancalaStyles.css" text="Edit your profile">
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonClick" styleClass="fillblue_button" stylesheets="@MancalaStyles.css" text="Back to menu">
                <GridPane.margin>
                   <Insets bottom="30.0" />
                </GridPane.margin>
@@ -59,9 +48,19 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" text="Account" />
-                  <Button mnemonicParsing="false" text="Stats" GridPane.columnIndex="1" />
-                  <Button mnemonicParsing="false" text="Favourites" GridPane.columnIndex="2" />
+                  <Button mnemonicParsing="false" onAction="#statsButtonClick" styleClass="fillblue_button" stylesheets="@MancalaStyles.css" text="View stats" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets top="10.0" />
+                     </GridPane.margin></Button>
+                  <Button fx:id="favouritesButton" mnemonicParsing="false" onAction="#favouritesButtonClick" styleClass="fillblue_button" stylesheets="@MancalaStyles.css" text="Favourites" GridPane.columnIndex="2">
+                     <GridPane.margin>
+                        <Insets top="10.0" />
+                     </GridPane.margin></Button>
+                  <Button fx:id="editButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#editButtonClick" styleClass="fillgreen_button" stylesheets="@MancalaStyles.css" text="Edit profile">
+                     <GridPane.margin>
+                        <Insets top="10.0" />
+                     </GridPane.margin>
+                  </Button>
                </children>
             </GridPane>
             <Label text="Your profile">

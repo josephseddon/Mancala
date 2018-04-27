@@ -39,6 +39,8 @@ public class FXMLOwnUserProfileController implements Initializable {
     @FXML
     private Button pictureButton;
     @FXML
+    private Button favourites;
+    @FXML
     private Label username;
     @FXML
     private Label firstName;
@@ -95,7 +97,16 @@ public class FXMLOwnUserProfileController implements Initializable {
          Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          app_stage.setScene(home_page_scene);
          app_stage.show();
-    }    
+    }   
+    
+    public void favouritesButtonClick(ActionEvent event) throws IOException {
+         System.out.println("BacktoMenu button clicked");
+         Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLFavouriteUser.fxml"));
+         Scene home_page_scene = new Scene(home_page_parent);
+         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+         app_stage.setScene(home_page_scene);
+         app_stage.show();
+    } 
     
     /**
      * Takes user to edit profile page
@@ -117,6 +128,14 @@ public class FXMLOwnUserProfileController implements Initializable {
     public void pictureButtonClick(ActionEvent event) throws IOException {
          System.out.println("ChangePicture button clicked");
          Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLPictureSelection.fxml"));
+         Scene home_page_scene = new Scene(home_page_parent);
+         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+         app_stage.setScene(home_page_scene);
+         app_stage.show();
+    } 
+    public void statsButtonClick(ActionEvent event) throws IOException {
+         System.out.println("ChangePicture button clicked");
+         Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLOwnUserStats.fxml"));
          Scene home_page_scene = new Scene(home_page_parent);
          Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          app_stage.setScene(home_page_scene);
