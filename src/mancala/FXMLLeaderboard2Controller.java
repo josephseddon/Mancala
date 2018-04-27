@@ -14,6 +14,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import com.sun.javafx.scene.control.skin.TableCellSkin;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,8 +27,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -44,11 +45,11 @@ public class FXMLLeaderboard2Controller implements Initializable {
      * Initializes the controller class.
      */
     
-    @FXML private TableView tbView;
-    @FXML private TableColumn username;
-    @FXML private TableColumn wins;
-    @FXML private TableColumn ratio;
-    @FXML private TableColumn operation;
+    @FXML private TableView<FavoriteUser> tbView;
+    @FXML private TableColumn<FavoriteUser,String> username;
+    @FXML private TableColumn<FavoriteUser,String> wins;
+    @FXML private TableColumn<FavoriteUser,String> ratio;
+    @FXML private TableColumn<FavoriteUser,String> operation;
     @FXML private Button mainmenuButton;
     
     @Override
@@ -59,33 +60,47 @@ public class FXMLLeaderboard2Controller implements Initializable {
     private void showList() {
 		// TODO Auto-generated method stub
 		String sql = ("SELECT username, wins, ratio FROM User ORDER BY wins COLLATE NOCASE DESC");
-		username.setCellValueFactory(new PropertyValueFactory("username"));                
-		wins.setCellValueFactory(new PropertyValueFactory("wins"));
-                ratio.setCellValueFactory(new PropertyValueFactory("ratio"));
-		operation.setCellFactory(new Callback<TableColumn, TableCell>() {
-	        @Override
-	        public TableCell call(TableColumn param) {
-	            TableCell cell = new TableCell<FavoriteUser,String>() {
-	                @Override
-	                public void updateItem(String item, boolean empty) {
-	                    super.updateItem(item, empty);
-	                    this.setText(null);
-	                    this.setGraphic(null);
-	                    if (!empty) {
-	                        Button unmarkBtn = new Button("unmark");
+		List<String> markedList = getMarkedList();
+		username.setCellValueFactory(new PropertyValueFactory<FavoriteUser,String>("username"));                
+		wins.setCellValueFactory(new PropertyValueFactory<>	("wins"));
+        ratio.setCellValueFactory(new PropertyValueFactory<>("ratio"));
+        username.setCellFactory((col)->new TableCell<FavoriteUser,String>(){
+        	public void updateItem(String item, boolean empty) {
+        		super.updateItem(item, empty);
+        		if(!empty) {
+        			if(markedList.contains(item)) this.setText(item+"  ♥");
+        			else this.setText(item);
+        		}
+        	}
+        });
+		operation.setCellFactory((col)-> new TableCell<FavoriteUser,String>() {
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    this.setText(null);
+                    this.setGraphic(null);
+                    if (!empty) {
+                    	String username = this.getTableView().getItems().
+                        		get(this.getIndex()).getUsername();
+                    	
+                    	if(markedList.contains(username)) {
+                    		Button unmarkBtn = new Button("unmark");
 	                        this.setGraphic(unmarkBtn);
 	                        unmarkBtn.setOnMouseClicked((me) -> {
-	                            String unmarkUsername = this.getTableView().getItems().
-	                            		get(this.getIndex()).getUsername();
-	                            unmarkFavorite(unmarkUsername);
+	                            unmarkFavorite(username);
 	                            showList();
 	                        });
-	                    }
-	                }
-	            };
-	            return cell;
-	        }
-	    });
+                    	}else {
+                    		Button markBtn = new Button("mark");
+	                        this.setGraphic(markBtn);
+	                        markBtn.setOnMouseClicked((me) -> {
+	                            markFavorite(username);
+	                            showList();
+	                        });
+                    	} 
+                    }
+                }
+		});
 		ObservableList<FavoriteUser> list = FXCollections.observableArrayList();
 		Connection c = null;
 		PreparedStatement ps = null;
@@ -97,9 +112,9 @@ public class FXMLLeaderboard2Controller implements Initializable {
 			while(rs.next()) { 
 				FavoriteUser rowData = new FavoriteUser();
 				rowData.setUsername(rs.getString(1)); 
-                                rowData.setWins(rs.getString(2));
-                                rowData.setRatio(rs.getString(3));
-                                list.add(rowData);  
+                rowData.setWins(rs.getString(2));
+                rowData.setRatio(rs.getString(3));
+                list.add(rowData);  
 			}
 			ps.close();
 			c.close();
@@ -108,20 +123,36 @@ public class FXMLLeaderboard2Controller implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
-			if(c != null) {
-				try {
-					c.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+			SqlHelper.closeConnection(c);
 		}
 	}
+    
+    public List<String> getMarkedList() {
+    	String sql = "select favorite_username from FavoriteUser where username = ?";
+    	String username = getCurrentUsername();
+    	Connection c =null;
+    	PreparedStatement ps = null;
+    	List<String> markedList = new ArrayList<String>();
+    	try {
+			c =SqlHelper.getConnection();
+			ps = c.prepareStatement(sql);
+			ps.setString(1, username);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				markedList.add(rs.getString(1));
+			}
+			ps.close();
+			c.close();
+		} catch (Exception e) {
+			
+		}finally {
+			SqlHelper.closeConnection(c);
+		}
+    	return markedList;
+    }
     public void markFavorite(String markUsername) {
 		String currentUsername = getCurrentUsername();
-		String sql = "insert into FavoriteUser values("+
-				" (?,?)";
+		String sql = "insert into FavoriteUser values(?,?)";
 		List<String> l = new ArrayList<String>();
 		l.add(currentUsername);
 		l.add(markUsername);
@@ -158,7 +189,7 @@ public class FXMLLeaderboard2Controller implements Initializable {
 		return null;
 	}
         
-         public void mainmenuButtonClick(ActionEvent event) throws IOException {
+     public void mainmenuButtonClick(ActionEvent event) throws IOException {
          System.out.println("BacktoMenu button clicked");
          Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLHomePage.fxml"));
          Scene home_page_scene = new Scene(home_page_parent);

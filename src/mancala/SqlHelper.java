@@ -46,4 +46,14 @@ public class SqlHelper {
         c.setAutoCommit(false);
         return c;
 	}
+	public static void closeConnection(Connection c) {
+		if(c != null) {
+			try {
+				c.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 }
