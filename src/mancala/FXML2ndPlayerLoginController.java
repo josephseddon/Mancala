@@ -40,19 +40,23 @@ public class FXML2ndPlayerLoginController implements Initializable {
     @FXML
     public void secondplayerloginButtonAction(ActionEvent event) throws IOException {
          System.out.println("Login button clicked");
-          if (login())
-             {
-                setCurrentUser();
-                Parent home_page_parent = FXMLLoader.load(getClass().getResource("BoardView.fxml"));
-                Scene home_page_scene = new Scene(home_page_parent);
-                Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                app_stage.setScene(home_page_scene);
-                app_stage.show();
-             }
-            else
-            {
-                usererror_Label.setText("Sorry, user does not exist. Try again or play as guest");
-            }
+         if(new FXMLLeaderboard2Controller().getCurrentUsername().equals(username_box.getText())) {
+        	 usererror_Label.setText("Sorry,this user already logined in,try another one please");
+        	 return;
+         }
+	     if (login())
+	     {
+	          setCurrentUser();
+	          Parent home_page_parent = FXMLLoader.load(getClass().getResource("BoardView.fxml"));
+	          Scene home_page_scene = new Scene(home_page_parent);
+	          Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+	          app_stage.setScene(home_page_scene);
+	          app_stage.show();
+	      }
+	      else
+	      {
+	           usererror_Label.setText("Sorry, user does not exist. Try again or play as guest");
+	      }
     }
     
     private boolean login()
