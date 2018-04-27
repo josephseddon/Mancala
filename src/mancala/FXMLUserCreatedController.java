@@ -5,9 +5,18 @@
  */
 package mancala;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -19,6 +28,18 @@ public class FXMLUserCreatedController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    
+    @FXML 
+    private Button returnButton;
+    @FXML 
+    public void returntologinButtonAction(ActionEvent event) throws IOException {
+         System.out.println("Enter button clicked");
+         Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLLoginPage.fxml"));
+         Scene home_page_scene = new Scene(home_page_parent);
+         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+         app_stage.setScene(home_page_scene);
+         app_stage.show();
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

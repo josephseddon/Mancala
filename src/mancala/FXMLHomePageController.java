@@ -46,21 +46,14 @@ public class FXMLHomePageController implements Initializable {
     @FXML 
     private Button logoutButton;
     
+    @FXML 
+    private Button profileButton;
     
     
     @FXML 
     public void startnewgameButtonAction(ActionEvent event) throws IOException {
          System.out.println("2nd player login clicked");
          Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXML2ndPlayerLogin.fxml"));
-         Scene home_page_scene = new Scene(home_page_parent);
-         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-         app_stage.setScene(home_page_scene);
-         app_stage.show();
-    }
-    
-    public void startoldgameButtonAction(ActionEvent event) throws IOException {
-         System.out.println("Start old game button clicked");
-         Parent home_page_parent = FXMLLoader.load(getClass().getResource("BoardViewOld.fxml"));
          Scene home_page_scene = new Scene(home_page_parent);
          Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          app_stage.setScene(home_page_scene);
@@ -78,7 +71,7 @@ public class FXMLHomePageController implements Initializable {
     
     public void leaderboardButtonAction(ActionEvent event) throws IOException {
          System.out.println("Opening Leaderboard");
-         Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLLeaderboard.fxml"));
+         Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLLeaderboard2.fxml"));
          Scene home_page_scene = new Scene(home_page_parent);
          Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          app_stage.setScene(home_page_scene);
@@ -93,6 +86,16 @@ public class FXMLHomePageController implements Initializable {
         app_stage.setScene(home_page_scene);
         app_stage.show();
     }
+    
+    public void profileButtonAction(ActionEvent event) throws IOException{
+    	System.out.println("Opening your user profile");
+    	Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLOwnUserProfile.fxml"));
+    	Scene home_page_scene = new Scene(home_page_parent);
+    	Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        app_stage.setScene(home_page_scene);
+        app_stage.show();
+    }
+    
     public void logOutButtonAction(ActionEvent event){
     	System.out.println("log out");
     	try {

@@ -6,6 +6,7 @@ public class FavoriteUser {
 	private String lname;
 	private String wins;
 	private String losses;
+        private String ratio;
 	public String getUsername() {
 		return username;
 	}
@@ -35,5 +36,11 @@ public class FavoriteUser {
 	}
 	public void setLosses(String losses) {
 		this.losses = losses;
+	}
+        public String getRatio() {
+		return ratio;
+	}
+	public void setRatio(String ratio) {
+		this.ratio = ratio;
 	}
 }
