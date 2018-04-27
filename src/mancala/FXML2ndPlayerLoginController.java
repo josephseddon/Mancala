@@ -51,7 +51,7 @@ public class FXML2ndPlayerLoginController implements Initializable {
              }
             else
             {
-                usererror_Label.setText("Sorry, user does not exist. Try again or play as guest");
+                usererror_Label.setText("Sorry, this username is unavailable. Try again or play as guest");
             }
     }
     
@@ -61,25 +61,29 @@ public class FXML2ndPlayerLoginController implements Initializable {
         System.out.println("SELECT * FROM User WHERE username= " + "'" + username_box.getText() + "'");
         
         Connection c;
-        Statement stmt;
+        Statement stmt1;
+        Statement stmt2;
         try {
             c = DriverManager.getConnection("jdbc:sqlite:mancala.db");
             c.setAutoCommit(false);
             
             System.out.println("Opened database successfully");
-            stmt = c.createStatement();
+            stmt1 = c.createStatement();
+            stmt2 = c.createStatement();
             
-            ResultSet rs = stmt.executeQuery("SELECT * FROM User WHERE username= " + "'" + username_box.getText() + "'");
+            ResultSet rsUser = stmt1.executeQuery("SELECT * FROM User WHERE username= " + "'" + username_box.getText() + "'");
+            ResultSet rsCurrent = stmt2.executeQuery("SELECT * FROM CurrentUser WHERE activeuserid = '1'");
             
-                while (rs.next() )  {
-                    if (rs.getString("username") != null) {
-                        String username = rs.getString("username");
+                while (rsUser.next() )  {
+                    if ((rsUser.getString("username") != null) && !username_box.getText().equals(rsCurrent.getString("CurrentUsers"))) {
+                        String username = rsUser.getString("username");
                         System.out.println("username = " + username );
                         let_in = true;
                     }
                 }
            
-            stmt.close();
+            stmt1.close();
+            stmt2.close();
             c.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage() );
